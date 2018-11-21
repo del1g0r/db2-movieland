@@ -27,7 +27,7 @@ public class MovieController {
     @RequestMapping(path = {"/v1/movie/random"}, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRandom() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(movieService.getRandom(1).get(0));
+        return objectMapper.writeValueAsString(movieService.getRandom(3));
     }
 }
 

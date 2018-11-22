@@ -1,34 +1,37 @@
 package com.study.movieland.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Random;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping(path = "movie")
 public class MovieController {
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
+    private int randomCount;
     private MovieService movieService;
 
-    @RequestMapping(path = {"/v1/movie"}, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String getJsonAll() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(movieService.getAll());
+    @GetMapping
+    public List<Movie> getAll() {
+        return movieService.getAll();
     }
 
-    @RequestMapping(path = {"/v1/movie/random"}, method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String getRandom() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(movieService.getRandom(3));
+    @GetMapping(path = {"random"})
+    public List<Movie> getRandom() {
+        return movieService.getRandom(randomCount);
+    }
+
+    @Value("${movie.randomCount:3}")
+    public void setRandomCount(int randomCount) {
+        this.randomCount = randomCount;
+    }
+
+    @Autowired
+    public void setMovieService(MovieService movieService) {
+        this.movieService = movieService;
     }
 }
-
-

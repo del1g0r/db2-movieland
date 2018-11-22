@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class DefaultMovieService implements MovieService {
 
-    @Autowired
     private MovieDao movieDao;
 
     @Override
@@ -22,5 +21,10 @@ public class DefaultMovieService implements MovieService {
     @Override
     public List<Movie> getRandom(int count) {
         return movieDao.getRandom(count);
+    }
+
+    @Autowired
+    public void setMovieDao(MovieDao movieDao) {
+        this.movieDao = movieDao;
     }
 }

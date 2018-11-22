@@ -1,11 +1,16 @@
 package com.study.movieland.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Objects;
+
 public class Movie {
 
     private int id;
     private String nameRussian;
     private String nameNative;
     private int yearOfRelease;
+    @JsonIgnore
     private String description;
     private float rating;
     private float price;
@@ -85,5 +90,74 @@ public class Movie {
                 ", rating=" + rating +
                 ", picturePath='" + picturePath + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Movie)) return false;
+        Movie movie = (Movie) o;
+        return id == movie.id &&
+                yearOfRelease == movie.yearOfRelease &&
+                Float.compare(movie.rating, rating) == 0 &&
+                Float.compare(movie.price, price) == 0 &&
+                Objects.equals(nameRussian, movie.nameRussian) &&
+                Objects.equals(nameNative, movie.nameNative) &&
+                Objects.equals(description, movie.description) &&
+                Objects.equals(picturePath, movie.picturePath);
+    }
+
+    public static class Builder implements javafx.util.Builder {
+
+        Movie movie;
+
+        public Builder() {
+            movie = new Movie();
+        }
+
+        public Builder id(int value) {
+            movie.setId(value);
+            return this;
+        }
+
+        public Builder nameRussian(String value) {
+            movie.setNameRussian(value);
+            return this;
+        }
+
+        public Builder nameNative(String value) {
+            movie.setNameNative(value);
+            return this;
+        }
+
+        public Builder yearOfRelease(int value) {
+            movie.setYearOfRelease(value);
+            return this;
+        }
+
+        public Builder description(String value) {
+            movie.setDescription(value);
+            return this;
+        }
+
+        public Builder rating(float value) {
+            movie.setRating(value);
+            return this;
+        }
+
+        public Builder price(float value) {
+            movie.setPrice(value);
+            return this;
+        }
+
+        public Builder picturePath(String value) {
+            movie.setPicturePath(value);
+            return this;
+        }
+
+        @Override
+        public Movie build() {
+            return movie;
+        }
     }
 }

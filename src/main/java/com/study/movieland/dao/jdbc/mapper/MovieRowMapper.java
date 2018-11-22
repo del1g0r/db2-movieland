@@ -10,14 +10,15 @@ public class MovieRowMapper implements RowMapper<Movie> {
 
     @Override
     public Movie mapRow(ResultSet resultSet, int i) throws SQLException {
-        Movie movie = new Movie();
-        movie.setId(resultSet.getInt("id"));
-        movie.setNameRussian(resultSet.getString("name"));
-        movie.setNameNative(resultSet.getString("original_name"));
-        movie.setYearOfRelease(resultSet.getInt("year"));
-        movie.setRating(resultSet.getFloat("rating"));
-        movie.setPrice(resultSet.getFloat("price"));
-        movie.setPicturePath(resultSet.getString("poster_url"));
-        return movie;
+        return new Movie.Builder()
+                .id(resultSet.getInt("id"))
+                .nameNative(resultSet.getString("original_name"))
+                .nameRussian(resultSet.getString("name"))
+                .yearOfRelease(resultSet.getInt("year"))
+                .rating(resultSet.getFloat("rating"))
+                .price(resultSet.getFloat("price"))
+                .description(resultSet.getString("description"))
+                .picturePath(resultSet.getString("poster_url"))
+                .build();
     }
 }

@@ -12,8 +12,8 @@ public class Movie {
     private int yearOfRelease;
     @JsonIgnore
     private String description;
-    private float rating;
-    private float price;
+    private double rating;
+    private double price;
     private String picturePath;
 
     public int getId() {
@@ -56,19 +56,19 @@ public class Movie {
         this.yearOfRelease = yearOfRelease;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -99,15 +99,15 @@ public class Movie {
         Movie movie = (Movie) o;
         return id == movie.id &&
                 yearOfRelease == movie.yearOfRelease &&
-                Float.compare(movie.rating, rating) == 0 &&
-                Float.compare(movie.price, price) == 0 &&
+                Double.compare(movie.rating, rating) == 0 &&
+                Double.compare(movie.price, price) == 0 &&
                 Objects.equals(nameRussian, movie.nameRussian) &&
                 Objects.equals(nameNative, movie.nameNative) &&
                 Objects.equals(description, movie.description) &&
                 Objects.equals(picturePath, movie.picturePath);
     }
 
-    public static class Builder {
+    public static class Builder implements javafx.util.Builder {
 
         private Movie movie;
 
@@ -140,12 +140,12 @@ public class Movie {
             return this;
         }
 
-        public Builder rating(float value) {
+        public Builder rating(double value) {
             movie.setRating(value);
             return this;
         }
 
-        public Builder price(float value) {
+        public Builder price(double value) {
             movie.setPrice(value);
             return this;
         }
@@ -155,6 +155,7 @@ public class Movie {
             return this;
         }
 
+        @Override
         public Movie build() {
             return movie;
         }

@@ -21,8 +21,8 @@ public class MovieRowMapperTest {
         when(resultSet.getString("original_name")).thenReturn("Movie 1");
         when(resultSet.getString("name")).thenReturn("Фильм 1");
         when(resultSet.getInt("year")).thenReturn(2000);
-        when(resultSet.getFloat("rating")).thenReturn(100f);
-        when(resultSet.getFloat("price")).thenReturn(101f);
+        when(resultSet.getDouble("rating")).thenReturn(100d);
+        when(resultSet.getDouble("price")).thenReturn(101d);
         when(resultSet.getString("poster_url")).thenReturn("http://localhost/1.jpg");
         when(resultSet.getString("description")).thenReturn("Some text");
 

@@ -1,9 +1,7 @@
 package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.GenreDao;
-import com.study.movieland.dao.MovieDao;
 import com.study.movieland.entity.Genre;
-import com.study.movieland.entity.Movie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,9 +18,9 @@ public class DefaultGenreServiceTest {
         GenreDao genreDao = new MockGenreDao();
         genreService.setGenreDao(genreDao);
 
-        List<Genre> actualMovies = genreService.getAll();
+        List<Genre> actualGenres = genreService.getAll();
 
-        Assert.assertThat(actualMovies, is(
+        Assert.assertThat(actualGenres, is(
                 Arrays.asList(
                         new Genre.Builder()
                                 .id(1)

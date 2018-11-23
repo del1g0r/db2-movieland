@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 public class GenreRowMapperTest {
 
     @Test
-    public void testMapMovie() throws Exception {
+    public void testMapGenre() throws Exception {
 
         GenreRowMapper genreRowMapper = new GenreRowMapper();
 

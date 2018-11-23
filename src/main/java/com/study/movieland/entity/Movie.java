@@ -107,7 +107,7 @@ public class Movie {
                 Objects.equals(picturePath, movie.picturePath);
     }
 
-    public static class Builder implements javafx.util.Builder {
+    public static class Builder {
 
         private Movie movie;
 
@@ -155,7 +155,6 @@ public class Movie {
             return this;
         }
 
-        @Override
         public Movie build() {
             return movie;
         }

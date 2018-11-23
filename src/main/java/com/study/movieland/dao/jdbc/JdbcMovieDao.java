@@ -14,6 +14,7 @@ public class JdbcMovieDao implements MovieDao {
 
     private static final String GET_ALL_SQL = "SELECT m.id, m.name, m.original_name, m.year, m.description, m.rating, m.price, p.poster_url FROM movie m LEFT JOIN poster p ON p.movie_id = m.id";
     private static final String GET_RANDOM_SQL = "SELECT m.id, m.name, m.original_name, m.year, m.description, m.rating, m.price, p.poster_url FROM movie m LEFT JOIN poster p ON p.movie_id = m.id ORDER BY RANDOM() LIMIT ?";
+    private static final String GET_BY_GENRE_SQL = "SELECT m.id, m.name, m.original_name, m.year, m.description, m.rating, m.price, p.poster_url FROM movie m JOIN movie_genre mg ON mg.movie_id = m.id LEFT JOIN poster p ON p.movie_id = m.id WHERE mg.genre_id = ?";
     private static final MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
 
     private JdbcTemplate jdbcTemplate;
@@ -26,6 +27,11 @@ public class JdbcMovieDao implements MovieDao {
     @Override
     public List<Movie> getRandom(int count) {
         return jdbcTemplate.query(GET_RANDOM_SQL, MOVIE_ROW_MAPPER, count);
+    }
+
+    @Override
+    public List<Movie> getByGenre(int genreId) {
+        return jdbcTemplate.query(GET_BY_GENRE_SQL, MOVIE_ROW_MAPPER, genreId);
     }
 
     @Autowired

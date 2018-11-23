@@ -109,7 +109,7 @@ public class Movie {
 
     public static class Builder {
 
-        Movie movie;
+        private Movie movie;
 
         public Builder() {
             movie = new Movie();

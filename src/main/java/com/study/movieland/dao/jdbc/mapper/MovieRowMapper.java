@@ -17,7 +17,6 @@ public class MovieRowMapper implements RowMapper<Movie> {
                 .yearOfRelease(resultSet.getInt("year"))
                 .rating(resultSet.getFloat("rating"))
                 .price(resultSet.getFloat("price"))
-                .description(resultSet.getString("description"))
                 .picturePath(resultSet.getString("poster_url"))
                 .build();
     }

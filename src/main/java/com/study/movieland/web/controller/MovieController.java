@@ -4,6 +4,7 @@ import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,14 +16,19 @@ public class MovieController {
     private int randomCount;
     private MovieService movieService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Movie> getAll() {
         return movieService.getAll();
     }
 
-    @GetMapping(path = {"random"})
+    @GetMapping(path = {"random"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Movie> getRandom() {
         return movieService.getRandom(randomCount);
+    }
+
+    @GetMapping(path = {"genre/{genreId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Movie> getByGenre(@PathVariable int genreId) {
+        return movieService.getByGenre(genreId);
     }
 
     @Value("${movie.randomCount:3}")

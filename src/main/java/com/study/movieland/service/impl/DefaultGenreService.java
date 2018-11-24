@@ -4,7 +4,6 @@ import com.study.movieland.dao.GenreDao;
 import com.study.movieland.entity.Genre;
 import com.study.movieland.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

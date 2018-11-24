@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository( "jdbcGenreDao")
+@Repository
 public class JdbcGenreDao implements GenreDao {
 
     private static final String GET_ALL_SQL = "SELECT g.id, g.name FROM genre g ORDER BY g.name";

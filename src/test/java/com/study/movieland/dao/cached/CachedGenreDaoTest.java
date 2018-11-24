@@ -18,17 +18,7 @@ public class CachedGenreDaoTest {
         CachedGenreDao cachedGenreDao = new CachedGenreDao();
         GenreDao genreDao = new StubGenreDao();
         cachedGenreDao.setGenreDao(genreDao);
-        cachedGenreDao.refreshTime = LocalDateTime.MIN;
-        cachedGenreDao.genres = Arrays.asList(
-                new Genre.Builder()
-                        .id(1)
-                        .name("Cached genre 1")
-                        .build(),
-                new Genre.Builder()
-                        .id(2)
-                        .name("Cached genre 2")
-                        .build()
-        );
+        cachedGenreDao.refresh();
 
         List<Genre> actualGenres = cachedGenreDao.getAll();
 
@@ -41,38 +31,6 @@ public class CachedGenreDaoTest {
                         new Genre.Builder()
                                 .id(2)
                                 .name("Genre 2")
-                                .build()
-                )));
-    }
-
-    @Test
-    public void testGetAllCached() {
-        CachedGenreDao cachedGenreDao = new CachedGenreDao();
-        GenreDao genreDao = new StubGenreDao();
-        cachedGenreDao.setGenreDao(genreDao);
-        cachedGenreDao.refreshTime = LocalDateTime.now().plusMinutes(10);
-        cachedGenreDao.genres = Arrays.asList(
-                new Genre.Builder()
-                        .id(1)
-                        .name("Cached genre 1")
-                        .build(),
-                new Genre.Builder()
-                        .id(2)
-                        .name("Cached genre 2")
-                        .build()
-        );
-
-        List<Genre> actualGenres = cachedGenreDao.getAll();
-
-        Assert.assertThat(actualGenres, is(
-                Arrays.asList(
-                        new Genre.Builder()
-                                .id(1)
-                                .name("Cached genre 1")
-                                .build(),
-                        new Genre.Builder()
-                                .id(2)
-                                .name("Cached genre 2")
                                 .build()
                 )));
     }

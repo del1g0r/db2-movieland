@@ -1,15 +1,13 @@
 package com.study.movieland.dao;
 
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
 public interface MovieDao {
 
-    List<Movie> getAll();
-
-    List<Movie> getSortedAll(Sort sort);
+    List<Movie> getAll(RequestParams requestParams);
 
     List<Movie> getRandom(int count);
 

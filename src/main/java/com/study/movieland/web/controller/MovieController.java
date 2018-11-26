@@ -1,10 +1,10 @@
 package com.study.movieland.web.controller;
 
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +18,8 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Movie> getAll(@RequestParam(name = "rating", required = false) String sortRatingDirection,
-                              @RequestParam(name = "price", required = false) String sortPriceDirection) {
-        if (sortRatingDirection != null) {
-            Sort.Direction sortDirection = sortRatingDirection.isEmpty() ? Sort.DEFAULT_DIRECTION : Sort.Direction.fromString(sortRatingDirection);
-            return movieService.getSortedAll(new Sort(sortDirection, "rating"));
-        }
-        if (sortPriceDirection != null) {
-            Sort.Direction sortDirection = sortPriceDirection.isEmpty() ? Sort.DEFAULT_DIRECTION : Sort.Direction.fromString(sortPriceDirection);
-            return movieService.getSortedAll(new Sort(sortDirection, "price"));
-        }
-        return movieService.getAll();
+    public List<Movie> getAll(RequestParams requestParams) {
+        return movieService.getAll(requestParams);
     }
 
     @GetMapping(path = {"random"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

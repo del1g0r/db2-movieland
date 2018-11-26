@@ -1,5 +1,6 @@
 package com.study.movieland.web.controller;
 
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.junit.Before;
@@ -69,8 +70,9 @@ public class MovieControllerTest {
                         .picturePath("http://localhost/2.jpg")
                         .build()
         );
+        RequestParams requestParams = new RequestParams.Builder().build();
 
-        when(movieService.getAll()).thenReturn(movies);
+        when(movieService.getAll(requestParams)).thenReturn(movies);
 
         mockMvc.perform(get("/movie"))
                 .andExpect(status().isOk())

@@ -12,8 +12,8 @@ public class Movie {
     private int yearOfRelease;
     @JsonIgnore
     private String description;
-    private float rating;
-    private float price;
+    private double rating;
+    private double price;
     private String picturePath;
 
     public int getId() {
@@ -36,11 +36,11 @@ public class Movie {
         return yearOfRelease;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -67,8 +67,8 @@ public class Movie {
         Movie movie = (Movie) o;
         return id == movie.id &&
                 yearOfRelease == movie.yearOfRelease &&
-                Float.compare(movie.rating, rating) == 0 &&
-                Float.compare(movie.price, price) == 0 &&
+                Double.compare(movie.rating, rating) == 0 &&
+                Double.compare(movie.price, price) == 0 &&
                 Objects.equals(nameRussian, movie.nameRussian) &&
                 Objects.equals(nameNative, movie.nameNative) &&
                 Objects.equals(description, movie.description) &&
@@ -82,7 +82,7 @@ public class Movie {
 
     public static class Builder {
 
-        Movie movie;
+        private Movie movie;
 
         public Builder() {
             movie = new Movie();
@@ -113,12 +113,12 @@ public class Movie {
             return this;
         }
 
-        public Builder rating(float value) {
+        public Builder rating(double value) {
             movie.rating = value;
             return this;
         }
 
-        public Builder price(float value) {
+        public Builder price(double value) {
             movie.price = value;
             return this;
         }

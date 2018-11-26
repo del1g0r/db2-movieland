@@ -23,6 +23,11 @@ public class DefaultMovieService implements MovieService {
         return movieDao.getRandom(count);
     }
 
+    @Override
+    public List<Movie> getByGenre(int genreId) {
+        return movieDao.getByGenre(genreId);
+    }
+
     @Autowired
     public void setMovieDao(MovieDao movieDao) {
         this.movieDao = movieDao;

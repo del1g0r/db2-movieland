@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -140,6 +141,67 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[1].price", is(201d)))
                 .andExpect(jsonPath("$[1].picturePath", is("http://localhost/2.jpg")))
                 .andExpect(jsonPath("$[1].*", not(containsInAnyOrder("description"))));
+    }
+
+    @Test
+    public void testGetByGenre() throws Exception {
+        List<Movie> movies = Arrays.asList(
+                new Movie.Builder()
+                        .id(1)
+                        .nameNative("Movie 1")
+                        .nameRussian("Фильм 1")
+                        .yearOfRelease(2000)
+                        .description("Description 1")
+                        .rating(100)
+                        .price(101)
+                        .picturePath("http://localhost/1.jpg")
+                        .build(),
+                new Movie.Builder()
+                        .id(2)
+                        .nameNative("Movie 2")
+                        .nameRussian("Фильм 2")
+                        .yearOfRelease(2001)
+                        .description("Description 2")
+                        .rating(200)
+                        .price(201)
+                        .picturePath("http://localhost/2.jpg")
+                        .build()
+        );
+
+        when(movieService.getByGenre(1)).thenReturn(movies);
+
+        mockMvc.perform(get("/movie/genre/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].nameNative", is("Movie 1")))
+                .andExpect(jsonPath("$[0].nameRussian", is("Фильм 1")))
+                .andExpect(jsonPath("$[0].yearOfRelease", is(2000)))
+                .andExpect(jsonPath("$[0].rating", is(100d)))
+                .andExpect(jsonPath("$[0].price", is(101d)))
+                .andExpect(jsonPath("$[0].picturePath", is("http://localhost/1.jpg")))
+                .andExpect(jsonPath("$[0].*", not(containsInAnyOrder("description"))))
+                .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[1].nameNative", is("Movie 2")))
+                .andExpect(jsonPath("$[1].nameRussian", is("Фильм 2")))
+                .andExpect(jsonPath("$[1].yearOfRelease", is(2001)))
+                .andExpect(jsonPath("$[1].rating", is(200d)))
+                .andExpect(jsonPath("$[1].price", is(201d)))
+                .andExpect(jsonPath("$[1].picturePath", is("http://localhost/2.jpg")))
+                .andExpect(jsonPath("$[1].*", not(containsInAnyOrder("description"))));
+    }
+
+    @Test
+    public void testGetByGenreNoFound() throws Exception {
+        List<Movie> movies = new ArrayList<>();
+
+        when(movieService.getByGenre(2)).thenReturn(movies);
+
+        mockMvc.perform(get("/movie/genre/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Configuration

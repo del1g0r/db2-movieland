@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.sql.ResultSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,8 +22,8 @@ public class MovieRowMapperTest {
         when(resultSet.getString("original_name")).thenReturn("Movie 1");
         when(resultSet.getString("name")).thenReturn("Фильм 1");
         when(resultSet.getInt("year")).thenReturn(2000);
-        when(resultSet.getFloat("rating")).thenReturn(100f);
-        when(resultSet.getFloat("price")).thenReturn(101f);
+        when(resultSet.getDouble("rating")).thenReturn(100d);
+        when(resultSet.getDouble("price")).thenReturn(101d);
         when(resultSet.getString("poster_url")).thenReturn("http://localhost/1.jpg");
         when(resultSet.getString("description")).thenReturn("Some text");
 
@@ -35,7 +36,7 @@ public class MovieRowMapperTest {
         assertEquals(100, actualMovie.getRating(), 0.0001);
         assertEquals(101, actualMovie.getPrice(), 0.0001);
         assertEquals("http://localhost/1.jpg", actualMovie.getPicturePath());
-        assertEquals("Some text", actualMovie.getDescription());
+        assertNull(actualMovie.getDescription());
     }
 }
 

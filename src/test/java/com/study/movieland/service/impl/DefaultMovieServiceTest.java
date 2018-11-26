@@ -126,7 +126,7 @@ public class DefaultMovieServiceTest {
         }
 
         @Override
-        public List<Movie> getByGenre(int genreId) {
+        public List<Movie> getByGenre(int genreId, RequestParams requestParams) {
             return Arrays.asList(new Movie.Builder()
                             .id(1)
                             .nameNative("Movie 1")

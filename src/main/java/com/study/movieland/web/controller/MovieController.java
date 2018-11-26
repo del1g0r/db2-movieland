@@ -28,8 +28,8 @@ public class MovieController {
     }
 
     @GetMapping(path = {"genre/{genreId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Movie> getByGenre(@PathVariable int genreId) {
-        return movieService.getByGenre(genreId);
+    public List<Movie> getByGenre(@PathVariable int genreId, RequestParams requestParams) {
+        return movieService.getByGenre(genreId, requestParams);
     }
 
     @Value("${movie.randomCount:3}")

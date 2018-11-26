@@ -33,8 +33,8 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public List<Movie> getByGenre(int genreId) {
-        return jdbcTemplate.query(GET_BY_GENRE_SQL, MOVIE_ROW_MAPPER, genreId);
+    public List<Movie> getByGenre(int genreId, RequestParams requestParams) {
+        return jdbcTemplate.query(sqlGenerator.getSQL(GET_BY_GENRE_SQL, requestParams), MOVIE_ROW_MAPPER, genreId);
     }
 
     @Autowired

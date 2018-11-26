@@ -4,10 +4,12 @@ import com.study.movieland.dao.MovieDao;
 import com.study.movieland.dao.jdbc.mapper.MovieRowMapper;
 import com.study.movieland.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 @Repository
 public class JdbcMovieDao implements MovieDao {
@@ -22,6 +24,18 @@ public class JdbcMovieDao implements MovieDao {
     @Override
     public List<Movie> getAll() {
         return jdbcTemplate.query(GET_ALL_SQL, MOVIE_ROW_MAPPER);
+    }
+
+    @Override
+    public List<Movie> getSortedAll(Sort sort) {
+        if (sort == null || sort.isUnsorted()) {
+            return getAll();
+        }
+        StringJoiner orderSql = new StringJoiner(",", " ORDER BY ", "");
+        for (Sort.Order order : sort) {
+            orderSql.add(order.getProperty() + ' ' + order.getDirection().toString());
+        }
+        return jdbcTemplate.query(GET_ALL_SQL + orderSql, MOVIE_ROW_MAPPER);
     }
 
     @Override

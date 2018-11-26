@@ -4,6 +4,7 @@ import com.study.movieland.dao.MovieDao;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,11 @@ public class DefaultMovieService implements MovieService {
     @Override
     public List<Movie> getAll() {
         return movieDao.getAll();
+    }
+
+    @Override
+    public List<Movie> getSortedAll(Sort sort) {
+        return movieDao.getSortedAll(sort);
     }
 
     @Override

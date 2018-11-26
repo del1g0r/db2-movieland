@@ -4,6 +4,7 @@ import com.study.movieland.dao.MovieDao;
 import com.study.movieland.entity.Movie;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +78,30 @@ public class DefaultMovieServiceTest {
     class MockMovieDao implements MovieDao {
         @Override
         public List<Movie> getAll() {
+            return Arrays.asList(new Movie.Builder()
+                            .id(1)
+                            .nameNative("Movie 1")
+                            .nameRussian("Фильм 1")
+                            .yearOfRelease(2000)
+                            .description("Description 1")
+                            .rating(100)
+                            .price(101)
+                            .picturePath("http://localhost/1.jpg")
+                            .build(),
+                    new Movie.Builder()
+                            .id(2)
+                            .nameNative("Movie 2")
+                            .nameRussian("Фильм 2")
+                            .yearOfRelease(2001)
+                            .description("Description 2")
+                            .rating(200)
+                            .price(201)
+                            .picturePath("http://localhost/2.jpg")
+                            .build());
+        }
+
+        @Override
+        public List<Movie> getSortedAll(Sort sort) {
             return Arrays.asList(new Movie.Builder()
                             .id(1)
                             .nameNative("Movie 1")

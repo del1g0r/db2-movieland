@@ -39,10 +39,7 @@
     </bean>
 
     <task:annotation-driven executor="defaultExecutor" scheduler="defaultScheduler"/>
-    <task:executor id="defaultExecutor" pool-size="2"/>
-    <task:scheduler id="defaultScheduler" pool-size="4"/>
-    <task:scheduled-tasks scheduler="defaultScheduler">
-        <task:scheduled ref="cachedGenreDao" method="refresh" fixed-delay="14400000" initial-delay="0"/>
-    </task:scheduled-tasks>
+    <task:executor id="defaultExecutor" pool-size="${executor.pool-size}"/>
+    <task:scheduler id="defaultScheduler" pool-size="${scheduler.pool-size}"/>
 
 </beans>

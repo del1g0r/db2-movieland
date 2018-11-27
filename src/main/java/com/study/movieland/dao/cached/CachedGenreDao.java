@@ -15,13 +15,11 @@ import java.util.List;
 @Primary
 public class CachedGenreDao implements GenreDao {
 
-    private static final int DEFAULT_DELAY = 4 * 60 * 60 * 1000;
-
     private GenreDao genreDao;
     private volatile List<Genre> genres;
 
     @PostConstruct
-    @Scheduled(fixedDelay = DEFAULT_DELAY, initialDelay = DEFAULT_DELAY)
+    @Scheduled(fixedDelayString = "${scheduled.genreFixedDelay:14400000}", initialDelayString = "${scheduled.genreFixedDelay:14400000}")
     public void refresh() {
         this.genres = genreDao.getAll();
     }

@@ -11,6 +11,10 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.study.movieland.web"/>
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.study.movieland.web.argumentresolver.RequestParamsArgumentResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
 </beans>

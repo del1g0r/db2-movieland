@@ -2,6 +2,8 @@ package com.study.movieland.dao.jdbc;
 
 import com.study.movieland.dao.MovieDao;
 import com.study.movieland.dao.jdbc.mapper.MovieRowMapper;
+import com.study.movieland.dao.jdbc.sql.SqlGenerator;
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +20,11 @@ public class JdbcMovieDao implements MovieDao {
     private static final MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
 
     private JdbcTemplate jdbcTemplate;
+    private SqlGenerator sqlGenerator;
 
     @Override
-    public List<Movie> getAll() {
-        return jdbcTemplate.query(GET_ALL_SQL, MOVIE_ROW_MAPPER);
+    public List<Movie> getAll(RequestParams requestParams) {
+        return jdbcTemplate.query(sqlGenerator.getSQL(GET_ALL_SQL, requestParams), MOVIE_ROW_MAPPER);
     }
 
     @Override
@@ -30,12 +33,17 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public List<Movie> getByGenre(int genreId) {
-        return jdbcTemplate.query(GET_BY_GENRE_SQL, MOVIE_ROW_MAPPER, genreId);
+    public List<Movie> getByGenre(int genreId, RequestParams requestParams) {
+        return jdbcTemplate.query(sqlGenerator.getSQL(GET_BY_GENRE_SQL, requestParams), MOVIE_ROW_MAPPER, genreId);
     }
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Autowired
+    public void setSqlGenerator(SqlGenerator sqlGenerator) {
+        this.sqlGenerator = sqlGenerator;
     }
 }

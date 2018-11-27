@@ -1,6 +1,7 @@
 package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.MovieDao;
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +18,9 @@ public class DefaultMovieServiceTest {
         DefaultMovieService movieService = new DefaultMovieService();
         MovieDao movieDao = new MockMovieDao();
         movieService.setMovieDao(movieDao);
+        RequestParams requestParams = new RequestParams.Builder().build();
 
-        List<Movie> actualMovies = movieService.getAll();
+        List<Movie> actualMovies = movieService.getAll(requestParams);
 
         Assert.assertThat(actualMovies, is(
                 Arrays.asList(new Movie.Builder()
@@ -76,7 +78,7 @@ public class DefaultMovieServiceTest {
 
     class MockMovieDao implements MovieDao {
         @Override
-        public List<Movie> getAll() {
+        public List<Movie> getAll(RequestParams requestParams) {
             return Arrays.asList(new Movie.Builder()
                             .id(1)
                             .nameNative("Movie 1")
@@ -124,7 +126,7 @@ public class DefaultMovieServiceTest {
         }
 
         @Override
-        public List<Movie> getByGenre(int genreId) {
+        public List<Movie> getByGenre(int genreId, RequestParams requestParams) {
             return Arrays.asList(new Movie.Builder()
                             .id(1)
                             .nameNative("Movie 1")

@@ -1,5 +1,6 @@
 package com.study.movieland.web.controller;
 
+import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.junit.Before;
@@ -69,8 +70,9 @@ public class MovieControllerTest {
                         .picturePath("http://localhost/2.jpg")
                         .build()
         );
+        RequestParams requestParams = new RequestParams.Builder().build();
 
-        when(movieService.getAll()).thenReturn(movies);
+        when(movieService.getAll(requestParams)).thenReturn(movies);
 
         mockMvc.perform(get("/movie"))
                 .andExpect(status().isOk())
@@ -118,7 +120,6 @@ public class MovieControllerTest {
                         .picturePath("http://localhost/2.jpg")
                         .build()
         );
-
         when(movieService.getRandom(3)).thenReturn(movies);
 
         mockMvc.perform(get("/movie/random"))
@@ -167,8 +168,9 @@ public class MovieControllerTest {
                         .picturePath("http://localhost/2.jpg")
                         .build()
         );
+        RequestParams requestParams = new RequestParams.Builder().build();
 
-        when(movieService.getByGenre(1)).thenReturn(movies);
+        when(movieService.getByGenre(1, requestParams)).thenReturn(movies);
 
         mockMvc.perform(get("/movie/genre/1"))
                 .andExpect(status().isOk())
@@ -195,8 +197,9 @@ public class MovieControllerTest {
     @Test
     public void testGetByGenreNoFound() throws Exception {
         List<Movie> movies = new ArrayList<>();
+        RequestParams requestParams = new RequestParams.Builder().build();
 
-        when(movieService.getByGenre(2)).thenReturn(movies);
+        when(movieService.getByGenre(2, requestParams)).thenReturn(movies);
 
         mockMvc.perform(get("/movie/genre/2"))
                 .andExpect(status().isOk())

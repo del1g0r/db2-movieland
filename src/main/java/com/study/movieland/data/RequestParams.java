@@ -59,25 +59,6 @@ public class RequestParams {
         return Objects.hash(sortFieldName, sortDirection, searchText, pageNumber, countOnPage);
     }
 
-    public enum SortDirection {
-
-        ASC, DESC;
-
-        static SortDirection DEFAULT_DIRECTION = ASC;
-
-        public static SortDirection getByName(String name) {
-            if (name == null || name.isEmpty()) {
-                return DEFAULT_DIRECTION;
-            }
-            for (SortDirection sortDirection : values()) {
-                if (sortDirection.toString().equalsIgnoreCase(name)) {
-                    return sortDirection;
-                }
-            }
-            throw new IllegalArgumentException("Is unknown direction: " + name);
-        }
-    }
-
     public static class Builder {
 
         private RequestParams requestParam;

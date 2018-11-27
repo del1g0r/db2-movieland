@@ -2,3 +2,9 @@ dbcp:
   maxTotal: 4
   testOnBorrow: true
   validationQuery: SELECT 1
+
+executor:
+  pool-size: 2
+
+scheduler:
+  pool-size: 4

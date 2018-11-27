@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="com.study.movieland">
         <context:exclude-filter type="regex" expression="com\.study\.movieland\.web\..*"/>
@@ -34,5 +37,9 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <task:annotation-driven executor="defaultExecutor" scheduler="defaultScheduler"/>
+    <task:executor id="defaultExecutor" pool-size="${executor.pool-size}"/>
+    <task:scheduler id="defaultScheduler" pool-size="${scheduler.pool-size}"/>
 
 </beans>

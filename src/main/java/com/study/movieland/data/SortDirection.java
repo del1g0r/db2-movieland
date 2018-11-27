@@ -6,15 +6,10 @@ public enum SortDirection {
 
     static SortDirection DEFAULT_DIRECTION = ASC;
 
-    public static SortDirection getByName(String name) {
-        if (name == null || name.isEmpty()) {
+    public static SortDirection getByString(String value) {
+        if (value == null || value.isEmpty()) {
             return DEFAULT_DIRECTION;
         }
-        for (SortDirection sortDirection : values()) {
-            if (sortDirection.toString().equalsIgnoreCase(name)) {
-                return sortDirection;
-            }
-        }
-        throw new IllegalArgumentException("Is unknown direction: " + name);
+        return SortDirection.valueOf(value.toUpperCase());
     }
 }

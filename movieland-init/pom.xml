@@ -7,12 +7,6 @@
     <artifactId>movieland-init</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <parent>
-        <groupId>com.study</groupId>
-        <artifactId>movieland</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <url>postgresql://ec2-54-75-231-3.eu-west-1.compute.amazonaws.com:5432/d8tmsdtk552drk</url>

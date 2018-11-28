@@ -10,8 +10,6 @@ public class Movie {
     private String nameRussian;
     private String nameNative;
     private int yearOfRelease;
-    @JsonIgnore
-    private String description;
     private double rating;
     private double price;
     private String picturePath;
@@ -26,10 +24,6 @@ public class Movie {
 
     public String getNameNative() {
         return nameNative;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public int getYearOfRelease() {
@@ -71,13 +65,12 @@ public class Movie {
                 Double.compare(movie.price, price) == 0 &&
                 Objects.equals(nameRussian, movie.nameRussian) &&
                 Objects.equals(nameNative, movie.nameNative) &&
-                Objects.equals(description, movie.description) &&
                 Objects.equals(picturePath, movie.picturePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameRussian, nameNative, yearOfRelease, description, rating, price, picturePath);
+        return Objects.hash(id, nameRussian, nameNative, yearOfRelease,  rating, price, picturePath);
     }
 
     public static class Builder {
@@ -105,11 +98,6 @@ public class Movie {
 
         public Builder yearOfRelease(int value) {
             movie.yearOfRelease = value;
-            return this;
-        }
-
-        public Builder description(String value) {
-            movie.description = value;
             return this;
         }
 

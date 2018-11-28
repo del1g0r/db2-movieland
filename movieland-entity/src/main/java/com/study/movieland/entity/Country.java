@@ -2,7 +2,7 @@ package com.study.movieland.entity;
 
 import java.util.Objects;
 
-public class Genre {
+public class Country {
 
     private int id;
     private String name;
@@ -17,7 +17,7 @@ public class Genre {
 
     @Override
     public String toString() {
-        return "Movie{" +
+        return "Country{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -26,31 +26,36 @@ public class Genre {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Genre)) return false;
-        Genre genre = (Genre) o;
-        return id == genre.id &&
-                Objects.equals(name, genre.name);
+        if (!(o instanceof Country)) return false;
+        Country country = (Country) o;
+        return id == country.id &&
+                Objects.equals(name, country.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     public static class Builder {
 
-        private Genre genre;
+        private Country genre;
 
         public Builder() {
-            genre = new Genre();
+            genre = new Country();
         }
 
-        public Builder id(int value) {
+        public Country.Builder id(int value) {
             genre.id = value;
             return this;
         }
 
-        public Builder name(String value) {
+        public Country.Builder name(String value) {
             genre.name = value;
             return this;
         }
 
-        public Genre build() {
+        public Country build() {
             return genre;
         }
     }

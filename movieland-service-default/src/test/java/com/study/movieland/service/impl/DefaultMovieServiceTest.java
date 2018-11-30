@@ -2,11 +2,13 @@ package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.MovieDao;
 import com.study.movieland.data.RequestParams;
+import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Movie;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -20,7 +22,7 @@ public class DefaultMovieServiceTest {
         movieService.setMovieDao(movieDao);
         RequestParams requestParams = new RequestParams.Builder().build();
 
-        List<Movie> actualMovies = movieService.getAll(requestParams);
+        Collection<Movie> actualMovies = movieService.getAll(requestParams);
 
         Assert.assertThat(actualMovies, is(
                 Arrays.asList(new Movie.Builder()
@@ -49,7 +51,7 @@ public class DefaultMovieServiceTest {
         MovieDao movieDao = new MockMovieDao();
         movieService.setMovieDao(movieDao);
 
-        List<Movie> actualMovies = movieService.getRandom(3);
+        Collection<Movie> actualMovies = movieService.getRandom(3);
 
         Assert.assertThat(actualMovies, is(
                 Arrays.asList(new Movie.Builder()
@@ -73,6 +75,11 @@ public class DefaultMovieServiceTest {
     }
 
     class MockMovieDao implements MovieDao {
+        @Override
+        public MovieDto get(int id) {
+            return null;
+        }
+
         @Override
         public List<Movie> getAll(RequestParams requestParams) {
             return Arrays.asList(new Movie.Builder()

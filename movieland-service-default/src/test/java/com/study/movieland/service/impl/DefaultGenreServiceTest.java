@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -18,7 +19,7 @@ public class DefaultGenreServiceTest {
         GenreDao genreDao = new MockGenreDao();
         genreService.setGenreDao(genreDao);
 
-        List<Genre> actualGenres = genreService.getAll();
+        Collection<Genre> actualGenres = genreService.getAll();
 
         Assert.assertThat(actualGenres, is(
                 Arrays.asList(
@@ -39,6 +40,11 @@ public class DefaultGenreServiceTest {
 
     class MockGenreDao implements GenreDao {
         @Override
+        public Genre get(int id) {
+            return null;
+        }
+
+        @Override
         public List<Genre> getAll() {
             return Arrays.asList(
                     new Genre.Builder()
@@ -53,6 +59,11 @@ public class DefaultGenreServiceTest {
                             .id(3)
                             .name("Genre 3")
                             .build());
+        }
+
+        @Override
+        public List<Genre> getSome(int[] ids) {
+            return null;
         }
     }
 }

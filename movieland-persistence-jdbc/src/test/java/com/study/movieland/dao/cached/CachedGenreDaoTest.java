@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +21,7 @@ public class CachedGenreDaoTest {
         cachedGenreDao.setGenreDao(genreDao);
         cachedGenreDao.refresh();
 
-        List<Genre> actualGenres = cachedGenreDao.getAll();
+        Collection<Genre> actualGenres = cachedGenreDao.getAll();
 
         Assert.assertThat(actualGenres, is(
                 Arrays.asList(
@@ -37,6 +38,11 @@ public class CachedGenreDaoTest {
 
     class StubGenreDao implements GenreDao {
         @Override
+        public Genre get(int id) {
+            return null;
+        }
+
+        @Override
         public List<Genre> getAll() {
             return Arrays.asList(
                     new Genre.Builder()
@@ -47,6 +53,11 @@ public class CachedGenreDaoTest {
                             .id(2)
                             .name("Genre 2")
                             .build());
+        }
+
+        @Override
+        public List<Genre> getSome(int[] ids) {
+            return null;
         }
     }
 }

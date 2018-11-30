@@ -3,7 +3,8 @@ package com.study.movieland.dto;
 import com.study.movieland.entity.Country;
 import com.study.movieland.entity.Genre;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Objects;
 
 public class MovieDto {
 
@@ -15,9 +16,9 @@ public class MovieDto {
     private double rating;
     private double price;
     private String picturePath;
-    private List<Country> countries;
-    private List<Genre> genres;
-    private List<ReviewDto> reviews;
+    private Collection<Country> countries;
+    private Collection<Genre> genres;
+    private Collection<ReviewDto> reviews;
 
     public int getId() {
         return id;
@@ -51,16 +52,56 @@ public class MovieDto {
         return picturePath;
     }
 
-    public List<Country> getCountries() {
+    public Collection<Country> getCountries() {
         return countries;
     }
 
-    public List<Genre> getGenres() {
+    public Collection<Genre> getGenres() {
         return genres;
     }
 
-    public List<ReviewDto> getReviews() {
+    public Collection<ReviewDto> getReviews() {
         return reviews;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MovieDto)) return false;
+        MovieDto movieDto = (MovieDto) o;
+        return id == movieDto.id &&
+                yearOfRelease == movieDto.yearOfRelease &&
+                Double.compare(movieDto.rating, rating) == 0 &&
+                Double.compare(movieDto.price, price) == 0 &&
+                Objects.equals(nameRussian, movieDto.nameRussian) &&
+                Objects.equals(nameNative, movieDto.nameNative) &&
+                Objects.equals(description, movieDto.description) &&
+                Objects.equals(picturePath, movieDto.picturePath) &&
+                Objects.equals(countries, movieDto.countries) &&
+                Objects.equals(genres, movieDto.genres) &&
+                Objects.equals(reviews, movieDto.reviews);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameRussian, nameNative, yearOfRelease, description, rating, price, picturePath, countries, genres, reviews);
+    }
+
+    @Override
+    public String toString() {
+        return "MovieDto{" +
+                "id=" + id +
+                ", nameRussian='" + nameRussian + '\'' +
+                ", nameNative='" + nameNative + '\'' +
+                ", yearOfRelease=" + yearOfRelease +
+                ", description='" + description + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", picturePath='" + picturePath + '\'' +
+                ", countries=" + countries +
+                ", genres=" + genres +
+                ", reviews=" + reviews +
+                '}';
     }
 
     public static class Builder {
@@ -69,6 +110,10 @@ public class MovieDto {
 
         public Builder() {
             movie = new MovieDto();
+        }
+
+        public Builder(MovieDto movie) {
+            this.movie = movie;
         }
 
         public Builder id(int value) {
@@ -111,17 +156,17 @@ public class MovieDto {
             return this;
         }
 
-        public Builder countries(List<Country> value) {
+        public Builder countries(Collection<Country> value) {
             movie.countries = value;
             return this;
         }
 
-        public Builder genres(List<Genre> value) {
+        public Builder genres(Collection<Genre> value) {
             movie.genres = value;
             return this;
         }
 
-        public Builder reviews(List<ReviewDto> value) {
+        public Builder reviews(Collection<ReviewDto> value) {
             movie.reviews = value;
             return this;
         }

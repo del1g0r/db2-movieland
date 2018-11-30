@@ -1,15 +1,19 @@
 package com.study.movieland.dao;
 
 import com.study.movieland.data.RequestParams;
+import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Movie;
 
-import java.util.List;
+
+import java.util.Collection;
 
 public interface MovieDao {
 
-    List<Movie> getAll(RequestParams requestParams);
+    MovieDto get(int id);
 
-    List<Movie> getRandom(int count);
+    Collection<Movie> getAll(RequestParams requestParams);
 
-    List<Movie> getByGenre(int genreId, RequestParams requestParams);
+    Collection<Movie> getRandom(int count);
+
+    Collection<Movie> getByGenre(int genreId, RequestParams requestParams);
 }

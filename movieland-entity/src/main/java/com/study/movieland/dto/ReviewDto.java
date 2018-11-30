@@ -54,6 +54,10 @@ public class ReviewDto {
             review = new ReviewDto();
         }
 
+        public Builder(ReviewDto review) {
+            this.review = review;
+        }
+
         public Builder id(int value) {
             review.id = value;
             return this;

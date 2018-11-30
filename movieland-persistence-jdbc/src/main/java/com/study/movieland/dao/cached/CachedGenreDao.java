@@ -9,24 +9,43 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
 
 @Repository
 @Primary
 public class CachedGenreDao implements GenreDao {
 
     private GenreDao genreDao;
-    private volatile List<Genre> genres;
+    private volatile HashMap<Integer, Genre> genres;
 
     @PostConstruct
     @Scheduled(fixedDelayString = "${scheduled.genreFixedDelay:14400000}", initialDelayString = "${scheduled.genreFixedDelay:14400000}")
     public void refresh() {
-        this.genres = genreDao.getAll();
+        HashMap<Integer, Genre> genres = new HashMap<>();
+        for (Genre genre : genreDao.getAll()) {
+            genres.put(genre.getId(), genre);
+        }
+        this.genres = genres;
     }
 
     @Override
-    public List<Genre> getAll() {
-        return new ArrayList<>(this.genres);
+    public Genre get(int id) {
+        return genres.get(id);
+    }
+
+    @Override
+    public Collection<Genre> getAll() {
+        return new ArrayList<>(this.genres.values());
+    }
+
+    @Override
+    public Collection<Genre> getSome(int[] ids) {
+        Collection<Genre> someGenres = new ArrayList<>();
+        for (int id : ids) {
+            someGenres.add(genres.get(id));
+        }
+        return someGenres;
     }
 
     @Autowired

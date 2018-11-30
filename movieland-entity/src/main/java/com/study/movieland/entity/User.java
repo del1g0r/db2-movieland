@@ -39,24 +39,28 @@ public class User {
 
     public static class Builder {
 
-        private User genre;
+        private User user;
 
         public Builder() {
-            genre = new User();
+            user = new User();
+        }
+
+        public Builder(User user) {
+            this.user = user;
         }
 
         public User.Builder id(int value) {
-            genre.id = value;
+            user.id = value;
             return this;
         }
 
         public User.Builder nickName(String value) {
-            genre.nickName = value;
+            user.nickName = value;
             return this;
         }
 
         public User build() {
-            return genre;
+            return user;
         }
     }
 }

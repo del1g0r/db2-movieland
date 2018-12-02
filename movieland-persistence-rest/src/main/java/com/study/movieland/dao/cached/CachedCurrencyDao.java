@@ -8,16 +8,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 @Repository
 @Primary
 public class CachedCurrencyDao implements CurrencyDao {
 
     private CurrencyDao currencyDao;
-    private volatile HashMap<String, Currency> countries;
+    private volatile Map<String, Currency> countries;
 
     @PostConstruct
     @Scheduled(fixedDelayString = "${scheduled.currencyFixedDelay:14400000}", initialDelayString = "${scheduled.currencyFixedDelay:14400000}")

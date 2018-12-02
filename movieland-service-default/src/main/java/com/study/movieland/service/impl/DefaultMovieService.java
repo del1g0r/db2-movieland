@@ -3,11 +3,9 @@ package com.study.movieland.service.impl;
 import com.study.movieland.dao.MovieDao;
 import com.study.movieland.data.RequestParams;
 import com.study.movieland.dto.MovieDto;
+import com.study.movieland.entity.Currency;
 import com.study.movieland.entity.Movie;
-import com.study.movieland.service.CountryService;
-import com.study.movieland.service.GenreService;
-import com.study.movieland.service.MovieService;
-import com.study.movieland.service.ReviewService;
+import com.study.movieland.service.*;
 import com.study.movieland.service.validator.MovieRequestParamsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +19,19 @@ public class DefaultMovieService implements MovieService {
     private GenreService genreService;
     private CountryService countryService;
     private ReviewService reviewService;
+    private CurrencyService currencyService;
     private MovieRequestParamsValidator requestParamValidator;
 
     @Override
-    public MovieDto get(int id) {
+    public MovieDto get(int id, String currencyCode) {
         MovieDto movie = movieDao.get(id);
+        Currency currency = currencyService.get(currencyCode);
+        double currencyRate = currency == null ? 0 : currency.getRate();
         return new MovieDto.Builder(movie)
                 .genres(genreService.getSome(genreService.getIds(movie.getGenres())))
                 .countries(countryService.getSome(countryService.getIds(movie.getCountries())))
                 .reviews(reviewService.getByMovie(id))
+                .price(currencyRate == 0 ? movie.getPrice() : movie.getPrice() / currencyRate)
                 .build();
     }
 
@@ -72,6 +74,11 @@ public class DefaultMovieService implements MovieService {
     @Autowired
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
+    }
+
+    @Autowired
+    public void setCurrencyService(CurrencyService currencyService) {
+        this.currencyService = currencyService;
     }
 
     @Autowired

@@ -4,11 +4,9 @@ import com.study.movieland.dao.MovieDao;
 import com.study.movieland.data.RequestParams;
 import com.study.movieland.dto.MovieDto;
 import com.study.movieland.dto.ReviewDto;
-import com.study.movieland.entity.Country;
-import com.study.movieland.entity.Genre;
-import com.study.movieland.entity.Movie;
-import com.study.movieland.entity.User;
+import com.study.movieland.entity.*;
 import com.study.movieland.service.CountryService;
+import com.study.movieland.service.CurrencyService;
 import com.study.movieland.service.GenreService;
 import com.study.movieland.service.ReviewService;
 import org.junit.Assert;
@@ -28,6 +26,7 @@ public class DefaultMovieServiceTest {
         movieService.setGenreService(new StubGenreService());
         movieService.setCountryService(new StubCountryService());
         movieService.setReviewService(new StubReviewService());
+        movieService.setCurrencyService(new StubCurrencyService());
         movieService.setMovieDao(new StubMovieDao());
 
         MovieDto expectedMovie = new MovieDto.Builder()
@@ -60,7 +59,7 @@ public class DefaultMovieServiceTest {
                                 .build()
                 ))
                 .build();
-        MovieDto actualMovie = movieService.get(1);
+        MovieDto actualMovie = movieService.get(1, "UAH");
 
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
@@ -308,6 +307,19 @@ public class DefaultMovieServiceTest {
                             .text("Some review text 2")
                             .user(new User.Builder().id(1).nickName("Some User 2").build())
                             .build());
+        }
+    }
+
+    class StubCurrencyService implements CurrencyService {
+
+        @Override
+        public Currency get(String code) {
+            return null;
+        }
+
+        @Override
+        public Collection<Currency> getAll() {
+            return null;
         }
     }
 }

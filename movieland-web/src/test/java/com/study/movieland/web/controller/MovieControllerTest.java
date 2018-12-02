@@ -83,7 +83,7 @@ public class MovieControllerTest {
                                 .build()))
                 .build();
 
-        when(movieService.get(1)).thenReturn(movie);
+        when(movieService.get(1, "UAH")).thenReturn(movie);
 
         mockMvc.perform(get("/movie/1"))
                 .andExpect(status().isOk())

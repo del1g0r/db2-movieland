@@ -24,8 +24,8 @@ public class MovieController {
     }
 
     @GetMapping(path = {"{movieId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MovieDto get(@PathVariable int movieId) {
-        return movieService.get(movieId);
+    public MovieDto get(@PathVariable int movieId, @RequestParam(name = "currency", defaultValue = "UAH") String currencyCode) {
+        return movieService.get(movieId, currencyCode);
     }
 
     @GetMapping(path = {"random"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

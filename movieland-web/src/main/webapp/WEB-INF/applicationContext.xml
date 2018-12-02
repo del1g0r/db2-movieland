@@ -38,6 +38,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
     <task:annotation-driven executor="defaultExecutor" scheduler="defaultScheduler"/>
     <task:executor id="defaultExecutor" pool-size="${executor.pool-size}"/>
     <task:scheduler id="defaultScheduler" pool-size="${scheduler.pool-size}"/>

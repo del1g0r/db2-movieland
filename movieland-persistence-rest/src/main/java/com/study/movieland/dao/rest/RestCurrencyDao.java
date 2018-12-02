@@ -19,7 +19,7 @@ import java.util.Collection;
 public class RestCurrencyDao implements CurrencyDao {
 
     private static final String GET_URL = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange";
-    private static HttpEntity<?> REQUEST_ENTITY = new HttpEntity<>(
+    private static final HttpEntity<?> REQUEST_ENTITY = new HttpEntity<>(
             new HttpHeaders() {{
                 setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             }});

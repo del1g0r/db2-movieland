@@ -20,7 +20,7 @@ public class CachedCurrencyDao implements CurrencyDao {
     @PostConstruct
     @Scheduled(fixedDelayString = "${scheduled.currencyFixedDelay:14400000}", initialDelayString = "${scheduled.currencyFixedDelay:14400000}")
     public void refresh() {
-        HashMap<String, Currency> countries = new HashMap<>();
+        Map<String, Currency> countries = new HashMap<>();
         for (Currency currency : currencyDao.getAll()) {
             countries.put(currency.getCc(), currency);
         }

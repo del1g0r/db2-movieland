@@ -7,16 +7,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 @Repository
 @Primary
 public class CachedUserDao implements UserDao {
 
     private UserDao userDao;
-    private volatile HashMap<Integer, User> users;
+    private volatile Map<Integer, User> users;
 
     @PostConstruct
     public void refresh() {

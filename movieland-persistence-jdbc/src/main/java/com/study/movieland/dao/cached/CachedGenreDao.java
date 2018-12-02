@@ -8,16 +8,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 @Repository
 @Primary
 public class CachedGenreDao implements GenreDao {
 
     private GenreDao genreDao;
-    private volatile HashMap<Integer, Genre> genres;
+    private volatile Map<Integer, Genre> genres;
 
     @PostConstruct
     @Scheduled(fixedDelayString = "${scheduled.genreFixedDelay:14400000}", initialDelayString = "${scheduled.genreFixedDelay:14400000}")

@@ -74,7 +74,6 @@ public class DefaultMovieService implements MovieService {
         this.reviewService = reviewService;
     }
 
-
     @Autowired
     public void setRequestParamValidator(MovieRequestParamsValidator requestParamValidator) {
         this.requestParamValidator = requestParamValidator;

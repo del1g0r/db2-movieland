@@ -38,7 +38,7 @@ public class CachedUserDao implements UserDao {
     }
 
     @Autowired
-    public void setCountryDao(UserDao userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 }

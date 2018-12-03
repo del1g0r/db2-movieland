@@ -13,7 +13,6 @@ import java.util.Collection;
 public class JdbcGenreDao implements GenreDao {
 
     private static final String GET_SQL = "SELECT g.id, g.name FROM genre g ORDER BY g.name WHERE g.id = ?";
-    private static final String GET_SOME_SQL = "SELECT g.id, g.name FROM genre g WHERE g.id IN ( SELECT UNNEST(?) ) ORDER BY g.name";
     private static final String GET_ALL_SQL = "SELECT g.id, g.name FROM genre g ORDER BY g.name";
     private static final GenreRowMapper GENRE_ROW_MAPPER = new GenreRowMapper();
 
@@ -27,11 +26,6 @@ public class JdbcGenreDao implements GenreDao {
     @Override
     public Collection<Genre> getAll() {
         return jdbcTemplate.query(GET_ALL_SQL, GENRE_ROW_MAPPER);
-    }
-
-    @Override
-    public Collection<Genre> getSome(int[] ids) {
-        return jdbcTemplate.query(GET_SOME_SQL, GENRE_ROW_MAPPER, ids);
     }
 
     @Autowired

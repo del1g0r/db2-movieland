@@ -14,26 +14,6 @@ import static org.junit.Assert.assertEquals;
 public class DefaultGenreServiceTest {
 
     @Test
-    public void testGetIds() {
-        DefaultGenreService genreService = new DefaultGenreService();
-        genreService.setGenreDao(new StubGenreDao());
-
-        int[] expectedIds = new int[]{1, 2};
-        int[] actualIds = genreService.getIds(Arrays.asList(
-                new Genre.Builder()
-                        .id(1)
-                        .name("Genre 1")
-                        .build(),
-                new Genre.Builder()
-                        .id(2)
-                        .name("Genre 2")
-                        .build()
-        ));
-
-        Assert.assertThat(actualIds, is(expectedIds));
-    }
-
-    @Test
     public void testGet() {
         DefaultGenreService genreService = new DefaultGenreService();
         genreService.setGenreDao(new StubGenreDao());
@@ -43,30 +23,6 @@ public class DefaultGenreServiceTest {
 
         assertEquals(expectedGenre.getId(), actualGenre.getId());
         assertEquals(expectedGenre.getName(), actualGenre.getName());
-    }
-
-    @Test
-    public void testGetSome() {
-        DefaultGenreService genreService = new DefaultGenreService();
-        genreService.setGenreDao(new StubGenreDao());
-
-        Collection<Genre> expectedGenres = Arrays.asList(
-                new Genre.Builder()
-                        .id(1)
-                        .name("Genre 1")
-                        .build(),
-                new Genre.Builder()
-                        .id(2)
-                        .name("Genre 2")
-                        .build(),
-                new Genre.Builder()
-                        .id(3)
-                        .name("Genre 3")
-                        .build()
-        );
-        Collection<Genre> actualGenres = genreService.getSome(new int[]{2, 3});
-
-        Assert.assertThat(actualGenres, is(expectedGenres));
     }
 
     @Test
@@ -117,24 +73,6 @@ public class DefaultGenreServiceTest {
                             .id(3)
                             .name("Genre 3")
                             .build());
-        }
-
-        @Override
-        public Collection<Genre> getSome(int[] ids) {
-            return Arrays.asList(
-                    new Genre.Builder()
-                            .id(1)
-                            .name("Genre 1")
-                            .build(),
-                    new Genre.Builder()
-                            .id(2)
-                            .name("Genre 2")
-                            .build(),
-                    new Genre.Builder()
-                            .id(3)
-                            .name("Genre 3")
-                            .build());
-
         }
     }
 }

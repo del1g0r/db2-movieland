@@ -9,4 +9,8 @@ public interface UserService {
     User get(int id);
 
     Collection<User> getAll();
+
+    default User enrich(User user) {
+        return get(user.getId());
+    }
 }

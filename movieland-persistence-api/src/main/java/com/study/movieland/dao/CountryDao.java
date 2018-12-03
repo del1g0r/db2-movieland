@@ -9,6 +9,4 @@ public interface CountryDao {
     Country get(int id);
 
     Collection<Country> getAll();
-
-    Collection<Country> getSome(int[] ids);
 }

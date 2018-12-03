@@ -37,15 +37,6 @@ public class CachedGenreDao implements GenreDao {
         return new ArrayList<>(this.genres.values());
     }
 
-    @Override
-    public Collection<Genre> getSome(int[] ids) {
-        Collection<Genre> someGenres = new ArrayList<>();
-        for (int id : ids) {
-            someGenres.add(genres.get(id));
-        }
-        return someGenres;
-    }
-
     @Autowired
     public void setGenreDao(GenreDao genreDao) {
         this.genreDao = genreDao;

@@ -1,8 +1,7 @@
 package com.study.movieland.web.controller;
 
 import com.study.movieland.data.RequestParams;
-import com.study.movieland.dto.MovieDto;
-import com.study.movieland.dto.ReviewDto;
+import com.study.movieland.entity.Review;
 import com.study.movieland.entity.Country;
 import com.study.movieland.entity.Genre;
 import com.study.movieland.entity.Movie;
@@ -53,7 +52,7 @@ public class MovieControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        MovieDto movie = new MovieDto.Builder()
+        Movie movie = new Movie.Builder()
                 .id(1)
                 .nameNative("Movie")
                 .nameRussian("Фильм")
@@ -71,12 +70,12 @@ public class MovieControllerTest {
                         new Country.Builder().id(2).name("Country 2").build()
                 ))
                 .reviews(Arrays.asList(
-                        new ReviewDto.Builder()
+                        new Review.Builder()
                                 .id(1)
                                 .text("Some review text 1")
                                 .user(new User.Builder().id(1).nickName("Some User 1").build())
                                 .build(),
-                        new ReviewDto.Builder()
+                        new Review.Builder()
                                 .id(2)
                                 .text("Some review text 2")
                                 .user(new User.Builder().id(2).nickName("Some User 2").build())

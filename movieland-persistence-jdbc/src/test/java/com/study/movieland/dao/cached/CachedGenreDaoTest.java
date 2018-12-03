@@ -51,27 +51,6 @@ public class CachedGenreDaoTest {
         Assert.assertThat(actualGenres, is(expectedGenres));
     }
 
-    @Test
-    public void testGetSome() {
-        CachedGenreDao cachedGenreDao = new CachedGenreDao();
-        cachedGenreDao.setGenreDao(new StubGenreDao());
-        cachedGenreDao.refresh();
-
-        Collection<Genre> expectedGenres = Arrays.asList(
-                new Genre.Builder()
-                        .id(2)
-                        .name("Genre 2")
-                        .build(),
-                new Genre.Builder()
-                        .id(3)
-                        .name("Genre 3")
-                        .build()
-        );
-        Collection<Genre> actualGenres = cachedGenreDao.getSome(new int[]{2, 3});
-
-        Assert.assertThat(actualGenres, is(expectedGenres));
-    }
-
     class StubGenreDao implements GenreDao {
         @Override
         public Genre get(int id) {
@@ -83,23 +62,6 @@ public class CachedGenreDaoTest {
 
         @Override
         public Collection<Genre> getAll() {
-            return Arrays.asList(
-                    new Genre.Builder()
-                            .id(1)
-                            .name("Genre 1")
-                            .build(),
-                    new Genre.Builder()
-                            .id(2)
-                            .name("Genre 2")
-                            .build(),
-                    new Genre.Builder()
-                            .id(3)
-                            .name("Genre 3")
-                            .build());
-        }
-
-        @Override
-        public Collection<Genre> getSome(int[] ids) {
             return Arrays.asList(
                     new Genre.Builder()
                             .id(1)

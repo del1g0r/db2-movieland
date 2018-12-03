@@ -51,27 +51,6 @@ public class CachedCountryDaoTest {
         Assert.assertThat(actualCountries, is(expectedCountries));
     }
 
-    @Test
-    public void testGetSome() {
-        CachedCountryDao cachedCountryDao = new CachedCountryDao();
-        cachedCountryDao.setCountryDao(new StubCountryDao());
-        cachedCountryDao.refresh();
-
-        Collection<Country> expectedCountries = Arrays.asList(
-                new Country.Builder()
-                        .id(2)
-                        .name("Country 2")
-                        .build(),
-                new Country.Builder()
-                        .id(3)
-                        .name("Country 3")
-                        .build()
-        );
-        Collection<Country> actualCountries = cachedCountryDao.getSome(new int[]{2, 3});
-
-        Assert.assertThat(actualCountries, is(expectedCountries));
-    }
-
     class StubCountryDao implements CountryDao {
         @Override
         public Country get(int id) {
@@ -83,24 +62,6 @@ public class CachedCountryDaoTest {
 
         @Override
         public Collection<Country> getAll() {
-            return Arrays.asList(
-                    new Country.Builder()
-                            .id(1)
-                            .name("Country 1")
-                            .build(),
-                    new Country.Builder()
-                            .id(2)
-                            .name("Country 2")
-                            .build(),
-                    new Country.Builder()
-                            .id(3)
-                            .name("Country 3")
-                            .build()
-            );
-        }
-
-        @Override
-        public Collection<Country> getSome(int[] ids) {
             return Arrays.asList(
                     new Country.Builder()
                             .id(1)

@@ -2,7 +2,7 @@ package com.study.movieland.dao.jdbc;
 
 import com.study.movieland.dao.ReviewDao;
 import com.study.movieland.dao.jdbc.mapper.ReviewDtoRowMapper;
-import com.study.movieland.dto.ReviewDto;
+import com.study.movieland.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,12 +19,7 @@ public class JdbRviewDao implements ReviewDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public ReviewDto get(int id) {
-        return jdbcTemplate.queryForObject(GET_SQL, REVIEW_ROW_MAPPER, id);
-    }
-
-    @Override
-    public Collection<ReviewDto> getByMovie(int movieId) {
+    public Collection<Review> getByMovie(int movieId) {
         return jdbcTemplate.query(GET_BY_USER_SQL, REVIEW_ROW_MAPPER, movieId);
     }
 

@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface MovieService {
 
-    Movie get(int id);
+    Movie get(int id, String currencyCode);
 
     Collection<Movie> getAll(RequestParams requestParams);
 

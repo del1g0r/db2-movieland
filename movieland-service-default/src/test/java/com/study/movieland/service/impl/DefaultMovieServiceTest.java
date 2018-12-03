@@ -1,12 +1,9 @@
 package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.MovieDao;
-import com.study.movieland.entity.Review;
-import com.study.movieland.entity.Country;
-import com.study.movieland.entity.Genre;
-import com.study.movieland.entity.Movie;
-import com.study.movieland.entity.User;
+import com.study.movieland.entity.*;
 import com.study.movieland.service.CountryService;
+import com.study.movieland.service.CurrencyService;
 import com.study.movieland.service.GenreService;
 import com.study.movieland.service.ReviewService;
 import org.junit.Assert;
@@ -33,6 +30,11 @@ public class DefaultMovieServiceTest {
         when(countryService.get(1)).thenReturn(new Country.Builder().id(1).name("Country 1").build());
         when(countryService.get(2)).thenReturn(new Country.Builder().id(2).name("Country 2").build());
         when(countryService.enrich(any())).thenCallRealMethod();
+
+        CurrencyService currencyService = Mockito.mock(DefaultCurrencyService.class);
+        when(currencyService.get("USD")).thenReturn(new Currency.Builder().id(1).name("US dollar").rate(8).build());
+        when(currencyService.get("EUR")).thenReturn(new Currency.Builder().id(2).name("Euro").rate(12).build());
+        when(currencyService.exchange(anyDouble(), anyString())).thenCallRealMethod();
 
         ReviewService reviewService = Mockito.mock(ReviewService.class);
         when(reviewService.getByMovie(1)).thenReturn(
@@ -75,6 +77,7 @@ public class DefaultMovieServiceTest {
         movieService.setGenreService(genreService);
         movieService.setCountryService(countryService);
         movieService.setReviewService(reviewService);
+        movieService.setCurrencyService(currencyService);
         movieService.setMovieDao(movieDao);
 
         Movie expectedMovie = new Movie.Builder()
@@ -107,7 +110,7 @@ public class DefaultMovieServiceTest {
                                 .build()
                 ))
                 .build();
-        Movie actualMovie = movieService.get(1);
+        Movie actualMovie = movieService.get(1, "UAH");
 
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());

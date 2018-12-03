@@ -2,7 +2,6 @@ package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.MovieDao;
 import com.study.movieland.data.RequestParams;
-import com.study.movieland.entity.Currency;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.*;
 import com.study.movieland.service.validator.MovieRequestParamsValidator;
@@ -22,13 +21,13 @@ public class DefaultMovieService implements MovieService {
     private MovieRequestParamsValidator requestParamValidator;
 
     @Override
-    public Movie get(int id) {
+    public Movie get(int id, String currencyCode) {
         Movie movie = movieDao.get(id);
         return new Movie.Builder(movie)
                 .genres(genreService.enrich(movie.getGenres()))
                 .countries(countryService.enrich(movie.getCountries()))
                 .reviews(reviewService.getByMovie(id))
-                .price(currencyRate == 0 ? movie.getPrice() : movie.getPrice() / currencyRate)
+                .price(currencyService.exchange(movie.getPrice(), currencyCode))
                 .build();
     }
 

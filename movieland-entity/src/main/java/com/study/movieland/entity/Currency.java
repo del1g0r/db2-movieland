@@ -1,15 +1,17 @@
 package com.study.movieland.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Currency {
 
-    //r030
+    @JsonProperty("r030")
     private int id;
-    //txt
+    @JsonProperty("txt")
     private String name;
     private double rate;
-    //cc
+    @JsonProperty("cc")
     private String code;
 
     public int getId() {

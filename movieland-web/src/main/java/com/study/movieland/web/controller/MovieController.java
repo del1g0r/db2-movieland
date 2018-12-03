@@ -26,8 +26,8 @@ public class MovieController {
     }
 
     @GetMapping(path = {"{movieId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Movie get(@PathVariable int movieId) {
-        return movieService.get(movieId);
+    public Movie get(@PathVariable int movieId, @RequestParam(name = "currency", defaultValue = "UAH") String currencyCode) {
+        return movieService.get(movieId, currencyCode);
     }
 
     @JsonView(Views.Lite.class)

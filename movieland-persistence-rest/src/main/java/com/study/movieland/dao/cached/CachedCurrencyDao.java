@@ -15,26 +15,26 @@ import java.util.*;
 public class CachedCurrencyDao implements CurrencyDao {
 
     private CurrencyDao currencyDao;
-    private volatile Map<String, Currency> countries;
+    private volatile Map<String, Currency> currencies;
 
     @PostConstruct
-    @Scheduled(fixedDelayString = "${scheduled.currencyFixedDelay:14400000}", initialDelayString = "${scheduled.currencyFixedDelay:14400000}")
+    @Scheduled(cron = "${scheduled.currencyCron:0 0 0 0 0 MON-FRI}")
     public void refresh() {
-        Map<String, Currency> countries = new HashMap<>();
+        Map<String, Currency> currencies = new HashMap<>();
         for (Currency currency : currencyDao.getAll()) {
-            countries.put(currency.getCc(), currency);
+            currencies.put(currency.getCode(), currency);
         }
-        this.countries = countries;
+        this.currencies = currencies;
     }
 
     @Override
     public Currency get(String code) {
-        return countries.get(code);
+        return currencies.get(code);
     }
 
     @Override
     public Collection<Currency> getAll() {
-        return new ArrayList<>(this.countries.values());
+        return new ArrayList<>(this.currencies.values());
     }
 
     @Autowired

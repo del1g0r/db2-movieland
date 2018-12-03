@@ -21,11 +21,11 @@ public class CachedCurrencyDaoTest {
         cachedCurrencyDao.setCurrencyDao(new StubCurrencyDao());
         cachedCurrencyDao.refresh();
 
-        Currency expectedCurrency = new Currency.Builder().cc("USD").txt("Долар США").rate(28.2).build();
+        Currency expectedCurrency = new Currency.Builder().code("USD").name("Долар США").rate(28.2).build();
         Currency actualCurrency = cachedCurrencyDao.get("USD");
 
-        assertEquals(expectedCurrency.getCc(), actualCurrency.getCc());
-        assertEquals(expectedCurrency.getTxt(), actualCurrency.getTxt());
+        assertEquals(expectedCurrency.getCode(), actualCurrency.getCode());
+        assertEquals(expectedCurrency.getName(), actualCurrency.getName());
     }
 
     @Test
@@ -39,14 +39,14 @@ public class CachedCurrencyDaoTest {
         //Assert.assertThat(actualCountries, containsInAnyOrder(expectedCountries));
         Assert.assertThat(actualCountries, hasItem(
                 new Currency.Builder()
-                        .cc("USD")
-                        .txt("Долар США")
+                        .code("USD")
+                        .name("Долар США")
                         .rate(28.2)
                         .build()));
         Assert.assertThat(actualCountries, hasItem(
                 new Currency.Builder()
-                        .cc("EUR")
-                        .txt("Євро")
+                        .code("EUR")
+                        .name("Євро")
                         .rate(30)
                         .build()));
     }
@@ -55,8 +55,8 @@ public class CachedCurrencyDaoTest {
         @Override
         public Currency get(String code) {
             return new Currency.Builder()
-                    .cc("USD")
-                    .txt("Долар США")
+                    .code("USD")
+                    .name("Долар США")
                     .rate(28.2)
                     .build();
         }
@@ -65,13 +65,13 @@ public class CachedCurrencyDaoTest {
         public Collection<Currency> getAll() {
             return Arrays.asList(
                     new Currency.Builder()
-                            .cc("USD")
-                            .txt("Долар США")
+                            .code("USD")
+                            .name("Долар США")
                             .rate(28.2)
                             .build(),
                     new Currency.Builder()
-                            .cc("EUR")
-                            .txt("Євро")
+                            .code("EUR")
+                            .name("Євро")
                             .rate(30)
                             .build()
             );

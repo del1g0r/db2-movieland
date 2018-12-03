@@ -39,24 +39,24 @@ public class Country {
 
     public static class Builder {
 
-        private Country genre;
+        private Country country;
 
         public Builder() {
-            genre = new Country();
+            country = new Country();
         }
 
         public Country.Builder id(int value) {
-            genre.id = value;
+            country.id = value;
             return this;
         }
 
         public Country.Builder name(String value) {
-            genre.name = value;
+            country.name = value;
             return this;
         }
 
         public Country build() {
-            return genre;
+            return country;
         }
     }
 }

@@ -4,25 +4,28 @@ import java.util.Objects;
 
 public class Currency {
 
-    private int r030;
-    private String txt;
+    //r030
+    private int id;
+    //txt
+    private String name;
     private double rate;
-    private String cc;
+    //cc
+    private String code;
 
-    public int getR030() {
-        return r030;
+    public int getId() {
+        return id;
     }
 
-    public String getTxt() {
-        return txt;
+    public String getName() {
+        return name;
     }
 
     public double getRate() {
         return rate;
     }
 
-    public String getCc() {
-        return cc;
+    public String getCode() {
+        return code;
     }
 
     @Override
@@ -30,24 +33,24 @@ public class Currency {
         if (this == o) return true;
         if (!(o instanceof Currency)) return false;
         Currency currency = (Currency) o;
-        return r030 == currency.r030 &&
+        return id == currency.id &&
                 Double.compare(currency.rate, rate) == 0 &&
-                Objects.equals(txt, currency.txt) &&
-                Objects.equals(cc, currency.cc);
+                Objects.equals(name, currency.name) &&
+                Objects.equals(code, currency.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(r030, txt, rate, cc);
+        return Objects.hash(id, name, rate, code);
     }
 
     @Override
     public String toString() {
         return "Currency{" +
-                "r030=" + r030 +
-                ", txt='" + txt + '\'' +
+                "r030=" + id +
+                ", txt='" + name + '\'' +
                 ", rate=" + rate +
-                ", cc='" + cc + '\'' +
+                ", cc='" + code + '\'' +
                 '}';
     }
 
@@ -59,23 +62,23 @@ public class Currency {
             currency = new Currency();
         }
 
-        public Currency.Builder r030(int value) {
-            currency.r030 = value;
+        public Builder id(int value) {
+            currency.id = value;
             return this;
         }
 
-        public Currency.Builder txt(String value) {
-            currency.txt = value;
+        public Builder name(String value) {
+            currency.name = value;
             return this;
         }
 
-        public Currency.Builder rate(double value) {
+        public Builder rate(double value) {
             currency.rate = value;
             return this;
         }
 
-        public Currency.Builder cc(String value) {
-            currency.cc = value;
+        public Builder code(String value) {
+            currency.code = value;
             return this;
         }
 

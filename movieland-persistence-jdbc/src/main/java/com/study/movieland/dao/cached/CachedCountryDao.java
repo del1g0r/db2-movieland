@@ -37,15 +37,6 @@ public class CachedCountryDao implements CountryDao {
         return new ArrayList<>(this.countries.values());
     }
 
-    @Override
-    public Collection<Country> getSome(int[] ids) {
-        List<Country> someCountries = new ArrayList<>();
-        for (int id : ids) {
-            someCountries.add(countries.get(id));
-        }
-        return someCountries;
-    }
-
     @Autowired
     public void setCountryDao(CountryDao countryDao) {
         this.countryDao = countryDao;

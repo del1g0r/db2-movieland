@@ -5,7 +5,6 @@ import com.study.movieland.dao.jdbc.mapper.MovieDtoRowMapper;
 import com.study.movieland.dao.jdbc.mapper.MovieRowMapper;
 import com.study.movieland.dao.jdbc.sql.SqlGenerator;
 import com.study.movieland.data.RequestParams;
-import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +26,7 @@ public class JdbcMovieDao implements MovieDao {
     private SqlGenerator sqlGenerator;
 
     @Override
-    public MovieDto get(int id) {
+    public Movie get(int id) {
         return jdbcTemplate.queryForObject(GET_SQL, MOVIEDAO_ROW_MAPPER, id);
     }
 

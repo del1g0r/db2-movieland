@@ -9,6 +9,4 @@ public interface GenreDao {
     Genre get(int id);
 
     Collection<Genre> getAll();
-
-    Collection<Genre> getSome(int[] ids);
 }

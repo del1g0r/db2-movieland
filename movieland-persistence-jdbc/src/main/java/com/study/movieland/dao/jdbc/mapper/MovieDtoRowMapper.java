@@ -1,8 +1,8 @@
 package com.study.movieland.dao.jdbc.mapper;
 
-import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Country;
 import com.study.movieland.entity.Genre;
+import com.study.movieland.entity.Movie;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDtoRowMapper implements RowMapper<MovieDto> {
+public class MovieDtoRowMapper implements RowMapper<Movie> {
 
     @Override
-    public MovieDto mapRow(ResultSet resultSet, int i) throws SQLException {
+    public Movie mapRow(ResultSet resultSet, int i) throws SQLException {
         List<Genre> genres = new ArrayList<>();
         for (int id : (Integer[]) resultSet.getArray("genre_ids").getArray()) {
             genres.add(new Genre.Builder().id(id).build());
@@ -22,7 +22,7 @@ public class MovieDtoRowMapper implements RowMapper<MovieDto> {
         for (int id : (Integer[]) resultSet.getArray("country_ids").getArray()) {
             countries.add(new Country.Builder().id(id).build());
         }
-        return new MovieDto.Builder()
+        return new Movie.Builder()
                 .id(resultSet.getInt("id"))
                 .nameNative(resultSet.getString("original_name"))
                 .nameRussian(resultSet.getString("name"))

@@ -1,15 +1,12 @@
 package com.study.movieland.dao.jdbc.mapper;
 
-import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Country;
 import com.study.movieland.entity.Genre;
+import com.study.movieland.entity.Movie;
 import org.junit.Test;
-import org.springframework.test.web.servlet.htmlunit.MockMvcWebConnection;
 
 import java.sql.Array;
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -42,7 +39,7 @@ public class MovieDtoRowMapperTest {
         when(resultSet.getArray("genre_ids")).thenReturn(arrayOfGenrteIds);
         when(resultSet.getArray("country_ids")).thenReturn(arrayOfCountryIds);
 
-        MovieDto actualMovieDto = movieDtoRowMapper.mapRow(resultSet, 1);
+        Movie actualMovieDto = movieDtoRowMapper.mapRow(resultSet, 1);
 
         assertEquals(1, actualMovieDto.getId());
         assertEquals("Movie 1", actualMovieDto.getNameNative());

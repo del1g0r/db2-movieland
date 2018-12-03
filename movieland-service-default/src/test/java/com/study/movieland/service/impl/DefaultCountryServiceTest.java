@@ -14,26 +14,6 @@ import static org.junit.Assert.assertEquals;
 public class DefaultCountryServiceTest {
 
     @Test
-    public void testGetIds() {
-        DefaultCountryService CountryService = new DefaultCountryService();
-        CountryService.setCountryDao(new StubCountryDao());
-
-        int[] expectedIds = new int[]{1, 2};
-        int[] actualIds = CountryService.getIds(Arrays.asList(
-                new Country.Builder()
-                        .id(1)
-                        .name("Country 1")
-                        .build(),
-                new Country.Builder()
-                        .id(2)
-                        .name("Country 2")
-                        .build()
-        ));
-
-        Assert.assertThat(actualIds, is(expectedIds));
-    }
-
-    @Test
     public void testGet() {
         DefaultCountryService CountryService = new DefaultCountryService();
         CountryService.setCountryDao(new StubCountryDao());
@@ -43,30 +23,6 @@ public class DefaultCountryServiceTest {
 
         assertEquals(expectedCountry.getId(), actualCountry.getId());
         assertEquals(expectedCountry.getName(), actualCountry.getName());
-    }
-
-    @Test
-    public void testGetSome() {
-        DefaultCountryService CountryService = new DefaultCountryService();
-        CountryService.setCountryDao(new StubCountryDao());
-
-        Collection<Country> expectedCountries = Arrays.asList(
-                new Country.Builder()
-                        .id(1)
-                        .name("Country 1")
-                        .build(),
-                new Country.Builder()
-                        .id(2)
-                        .name("Country 2")
-                        .build(),
-                new Country.Builder()
-                        .id(3)
-                        .name("Country 3")
-                        .build()
-        );
-        Collection<Country> actualCountries = CountryService.getSome(new int[]{2, 3});
-
-        Assert.assertThat(actualCountries, is(expectedCountries));
     }
 
     @Test
@@ -117,24 +73,6 @@ public class DefaultCountryServiceTest {
                             .id(3)
                             .name("Country 3")
                             .build());
-        }
-
-        @Override
-        public Collection<Country> getSome(int[] ids) {
-            return Arrays.asList(
-                    new Country.Builder()
-                            .id(1)
-                            .name("Country 1")
-                            .build(),
-                    new Country.Builder()
-                            .id(2)
-                            .name("Country 2")
-                            .build(),
-                    new Country.Builder()
-                            .id(3)
-                            .name("Country 3")
-                            .build());
-
         }
     }
 }

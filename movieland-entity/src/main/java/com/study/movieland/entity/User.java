@@ -17,7 +17,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "Country{" +
+        return "User{" +
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
                 '}';
@@ -27,9 +27,9 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
-        User country = (User) o;
-        return id == country.id &&
-                Objects.equals(nickName, country.nickName);
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(nickName, user.nickName);
     }
 
     @Override
@@ -49,12 +49,12 @@ public class User {
             this.user = user;
         }
 
-        public User.Builder id(int value) {
+        public Builder id(int value) {
             user.id = value;
             return this;
         }
 
-        public User.Builder nickName(String value) {
+        public Builder nickName(String value) {
             user.nickName = value;
             return this;
         }

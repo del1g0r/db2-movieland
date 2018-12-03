@@ -1,7 +1,8 @@
 package com.study.movieland.web.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.study.movieland.Views;
 import com.study.movieland.data.RequestParams;
-import com.study.movieland.dto.MovieDto;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +19,24 @@ public class MovieController {
     private int randomCount;
     private MovieService movieService;
 
+    @JsonView(Views.Lite.class)
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Collection<Movie> getAll(RequestParams requestParams) {
         return movieService.getAll(requestParams);
     }
 
     @GetMapping(path = {"{movieId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MovieDto get(@PathVariable int movieId, @RequestParam(name = "currency", defaultValue = "UAH") String currencyCode) {
-        return movieService.get(movieId, currencyCode);
+    public Movie get(@PathVariable int movieId) {
+        return movieService.get(movieId);
     }
 
+    @JsonView(Views.Lite.class)
     @GetMapping(path = {"random"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Collection<Movie> getRandom() {
         return movieService.getRandom(randomCount);
     }
 
+    @JsonView(Views.Lite.class)
     @GetMapping(path = {"genre/{genreId}"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Collection<Movie> getByGenre(@PathVariable int genreId, RequestParams requestParams) {
         return movieService.getByGenre(genreId, requestParams);

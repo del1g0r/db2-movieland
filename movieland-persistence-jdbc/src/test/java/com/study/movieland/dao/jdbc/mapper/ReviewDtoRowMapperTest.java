@@ -1,6 +1,6 @@
 package com.study.movieland.dao.jdbc.mapper;
 
-import com.study.movieland.dto.ReviewDto;
+import com.study.movieland.entity.Review;
 import org.junit.Test;
 
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ public class ReviewDtoRowMapperTest {
         when(resultSet.getString("review_text")).thenReturn("Review text 1");
         when(resultSet.getInt("user_id")).thenReturn(2);
 
-        ReviewDto actualReviewDto = reviewDtoRowMapper.mapRow(resultSet, 1);
+        Review actualReviewDto = reviewDtoRowMapper.mapRow(resultSet, 1);
 
         assertEquals(1, actualReviewDto.getId());
         assertEquals("Review text 1", actualReviewDto.getText());

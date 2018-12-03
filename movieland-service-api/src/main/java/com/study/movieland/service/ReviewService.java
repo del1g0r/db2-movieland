@@ -1,12 +1,10 @@
 package com.study.movieland.service;
 
-import com.study.movieland.dto.ReviewDto;
+import com.study.movieland.entity.Review;
 
 import java.util.Collection;
 
 public interface ReviewService {
 
-    ReviewDto get(int id);
-
-    Collection<ReviewDto> getByMovie(int movieId);
+    Collection<Review> getByMovie(int movieId);
 }

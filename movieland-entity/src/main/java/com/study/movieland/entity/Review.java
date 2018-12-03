@@ -1,10 +1,8 @@
-package com.study.movieland.dto;
-
-import com.study.movieland.entity.User;
+package com.study.movieland.entity;
 
 import java.util.Objects;
 
-public class ReviewDto {
+public class Review {
 
     private int id;
     private User user;
@@ -24,7 +22,7 @@ public class ReviewDto {
 
     @Override
     public String toString() {
-        return "ReviewDto{" +
+        return "Review{" +
                 "id=" + id +
                 ", user=" + user +
                 ", text='" + text + '\'' +
@@ -34,11 +32,11 @@ public class ReviewDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ReviewDto)) return false;
-        ReviewDto reviewDto = (ReviewDto) o;
-        return id == reviewDto.id &&
-                Objects.equals(user, reviewDto.user) &&
-                Objects.equals(text, reviewDto.text);
+        if (!(o instanceof Review)) return false;
+        Review review = (Review) o;
+        return id == review.id &&
+                Objects.equals(user, review.user) &&
+                Objects.equals(text, review.text);
     }
 
     @Override
@@ -48,13 +46,13 @@ public class ReviewDto {
 
     public static class Builder {
 
-        private ReviewDto review;
+        private Review review;
 
         public Builder() {
-            review = new ReviewDto();
+            review = new Review();
         }
 
-        public Builder(ReviewDto review) {
+        public Builder(Review review) {
             this.review = review;
         }
 
@@ -73,7 +71,7 @@ public class ReviewDto {
             return this;
         }
 
-        public ReviewDto build() {
+        public Review build() {
             return review;
         }
     }

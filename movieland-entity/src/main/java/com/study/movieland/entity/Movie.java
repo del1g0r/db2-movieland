@@ -123,57 +123,57 @@ public class Movie {
             this.movie = movie;
         }
 
-        public Movie.Builder id(int value) {
+        public Builder id(int value) {
             movie.id = value;
             return this;
         }
 
-        public Movie.Builder nameRussian(String value) {
+        public Builder nameRussian(String value) {
             movie.nameRussian = value;
             return this;
         }
 
-        public Movie.Builder nameNative(String value) {
+        public Builder nameNative(String value) {
             movie.nameNative = value;
             return this;
         }
 
-        public Movie.Builder yearOfRelease(int value) {
+        public Builder yearOfRelease(int value) {
             movie.yearOfRelease = value;
             return this;
         }
 
-        public Movie.Builder description(String value) {
+        public Builder description(String value) {
             movie.description = value;
             return this;
         }
 
-        public Movie.Builder rating(double value) {
+        public Builder rating(double value) {
             movie.rating = value;
             return this;
         }
 
-        public Movie.Builder price(double value) {
+        public Builder price(double value) {
             movie.price = value;
             return this;
         }
 
-        public Movie.Builder picturePath(String value) {
+        public Builder picturePath(String value) {
             movie.picturePath = value;
             return this;
         }
 
-        public Movie.Builder countries(Collection<Country> value) {
+        public Builder countries(Collection<Country> value) {
             movie.countries = value;
             return this;
         }
 
-        public Movie.Builder genres(Collection<Genre> value) {
+        public Builder genres(Collection<Genre> value) {
             movie.genres = value;
             return this;
         }
 
-        public Movie.Builder reviews(Collection<Review> value) {
+        public Builder reviews(Collection<Review> value) {
             movie.reviews = value;
             return this;
         }

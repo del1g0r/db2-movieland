@@ -49,12 +49,12 @@ public class User {
             this.user = user;
         }
 
-        public User.Builder id(int value) {
+        public Builder id(int value) {
             user.id = value;
             return this;
         }
 
-        public User.Builder nickName(String value) {
+        public Builder nickName(String value) {
             user.nickName = value;
             return this;
         }

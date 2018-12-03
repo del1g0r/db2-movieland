@@ -33,10 +33,10 @@ public class Review {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Review)) return false;
-        Review reviewDto = (Review) o;
-        return id == reviewDto.id &&
-                Objects.equals(user, reviewDto.user) &&
-                Objects.equals(text, reviewDto.text);
+        Review review = (Review) o;
+        return id == review.id &&
+                Objects.equals(user, review.user) &&
+                Objects.equals(text, review.text);
     }
 
     @Override

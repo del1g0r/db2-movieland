@@ -45,12 +45,12 @@ public class Country {
             country = new Country();
         }
 
-        public Country.Builder id(int value) {
+        public Builder id(int value) {
             country.id = value;
             return this;
         }
 
-        public Country.Builder name(String value) {
+        public Builder name(String value) {
             country.name = value;
             return this;
         }

@@ -32,30 +32,6 @@ public class SecurityController {
         securityService.logout(token);
     }
 
-    @GetMapping(path = {"test"}, produces = MediaType.TEXT_HTML_VALUE)
-    public String  test() {
-       return  "<html><body>" +
-               "<script>\n" +
-               "function test() {\n" +
-               "var xhr = new XMLHttpRequest();\n" +
-               "var url = \"login\";\n" +
-               "xhr.open(\"POST\", url, true);\n" +
-               "xhr.setRequestHeader(\"Content-Type\", \"application/json\");\n" +
-               "xhr.onreadystatechange = function () {\n" +
-               "    if (xhr.readyState === 4 && xhr.status === 200) {\n" +
-               "        var json = JSON.parse(xhr.responseText);\n" +
-               "        console.log(json.email + \", \" + json.password);\n" +
-               "    }\n" +
-               "};\n" +
-               "var data = JSON.stringify({\"email\": \"ronald.reynolds66@example.com\", \"password\": \"paco\"});\n" +
-               "xhr.send(data);\n" +
-               "}\n" +
-               "</script>" +
-               "<form enctype='application/json' action=\"login\" method=\"POST\">Name <input type=\"text\" name=\"login\"/>\n" +
-               "            Password <input type=\"password\" name=\"password\"/>\n" +
-               "            <input type=\"button\" onclick=\"test()\" value=\"Login\">\n</form></body></html>";
-    }
-
     @Autowired
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;

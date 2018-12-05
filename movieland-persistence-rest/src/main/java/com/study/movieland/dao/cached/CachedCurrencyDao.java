@@ -18,7 +18,7 @@ public class CachedCurrencyDao implements CurrencyDao {
     private volatile Map<String, Currency> currencies;
 
     @PostConstruct
-    @Scheduled(cron = "${scheduled.currencyCron:0 0 0 0 0 MON-FRI}")
+    @Scheduled(cron = "${scheduled.currencyCron:0 0 0 * * MON-FRI}")
     public void refresh() {
         Map<String, Currency> currencies = new HashMap<>();
         for (Currency currency : currencyDao.getAll()) {

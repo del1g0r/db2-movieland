@@ -8,7 +8,6 @@ import com.study.movieland.service.GenreService;
 import com.study.movieland.service.ReviewService;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.util.Arrays;

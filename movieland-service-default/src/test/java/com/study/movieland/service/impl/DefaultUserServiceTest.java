@@ -74,5 +74,10 @@ public class DefaultUserServiceTest {
                             .nickName("User 3")
                             .build());
         }
+
+        @Override
+        public User checkPassword(String name, String password) {
+            return null;
+        }
     }
 }

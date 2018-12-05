@@ -12,7 +12,7 @@ public class UserRowMapper implements RowMapper<User> {
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
         return new User.Builder()
                 .id(resultSet.getInt("id"))
-                .nickName(resultSet.getString("nickname"))
+                .nickName(resultSet.getString("name"))
                 .build();
     }
 }

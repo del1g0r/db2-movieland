@@ -65,6 +65,11 @@ public class DefaultReviewServiceTest {
         }
 
         @Override
+        public User checkUser(String login, String password) {
+            return null;
+        }
+
+        @Override
         public Collection<User> getAll() {
             return null;
         }

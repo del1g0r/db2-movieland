@@ -18,9 +18,7 @@ public class DefaultReviewService implements ReviewService {
     public Collection<Review> getByMovie(int movieId) {
         Collection<Review> reviews = reviewDao.getByMovie(movieId);
         for (Review review : reviews) {
-            new Review.Builder(review)
-                    .user(userService.enrich(review.getUser()))
-                    .build();
+            review.setUser(userService.enrich(review.getUser()));
         }
         return reviews;
     }

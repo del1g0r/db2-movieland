@@ -16,6 +16,10 @@ public class Review {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getText() {
         return text;
     }
@@ -50,10 +54,6 @@ public class Review {
 
         public Builder() {
             review = new Review();
-        }
-
-        public Builder(Review review) {
-            this.review = review;
         }
 
         public Builder id(int value) {

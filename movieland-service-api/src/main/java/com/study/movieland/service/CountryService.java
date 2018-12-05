@@ -11,10 +11,14 @@ public interface CountryService {
 
     Collection<Country> getAll();
 
+    default Country enrich(Country country) {
+        return get(country.getId());
+    }
+
     default Collection<Country> enrich(Collection<Country> countries) {
         Collection<Country> enrichedCountries = new ArrayList<>();
         for (Country country : countries) {
-            enrichedCountries.add(get(country.getId()));
+            enrichedCountries.add(enrich(country));
         }
         return enrichedCountries;
     }

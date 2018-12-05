@@ -8,12 +8,13 @@ import com.study.movieland.service.GenreService;
 import com.study.movieland.service.ReviewService;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -24,12 +25,14 @@ public class DefaultMovieServiceTest {
         GenreService genreService = Mockito.mock(DefaultGenreService.class);
         when(genreService.get(1)).thenReturn(new Genre.Builder().id(1).name("Genre 1").build());
         when(genreService.get(2)).thenReturn(new Genre.Builder().id(2).name("Genre 2").build());
-        when(genreService.enrich(any())).thenCallRealMethod();
+        when(genreService.enrich(any(Genre.class))).thenCallRealMethod();
+        when(genreService.enrich(anyCollectionOf(Genre.class))).thenCallRealMethod();
 
         CountryService countryService = Mockito.mock(DefaultCountryService.class);
         when(countryService.get(1)).thenReturn(new Country.Builder().id(1).name("Country 1").build());
         when(countryService.get(2)).thenReturn(new Country.Builder().id(2).name("Country 2").build());
-        when(countryService.enrich(any())).thenCallRealMethod();
+        when(countryService.enrich(any(Country.class))).thenCallRealMethod();
+        when(countryService.enrich(anyCollectionOf(Country.class))).thenCallRealMethod();
 
         CurrencyService currencyService = Mockito.mock(DefaultCurrencyService.class);
         when(currencyService.get("USD")).thenReturn(new Currency.Builder().id(1).name("US dollar").rate(8).build());

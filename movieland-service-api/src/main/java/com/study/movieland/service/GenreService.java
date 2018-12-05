@@ -11,10 +11,14 @@ public interface GenreService {
 
     Collection<Genre> getAll();
 
-    default Collection<Genre> enrich(Collection<Genre> genries) {
+    default Genre enrich(Genre genre) {
+        return get(genre.getId());
+    }
+
+    default Collection<Genre> enrich(Collection<Genre> genres) {
         Collection<Genre> enrichedGenres = new ArrayList<>();
-        for (Genre genre : genries) {
-            enrichedGenres.add(get(genre.getId()));
+        for (Genre genre : genres) {
+            enrichedGenres.add(enrich(genre));
         }
         return enrichedGenres;
     }

@@ -11,21 +11,13 @@ public class Genre {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return "Movie{" +
+        return "Genre{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -49,12 +41,12 @@ public class Genre {
         }
 
         public Builder id(int value) {
-            genre.setId(value);
+            genre.id = value;
             return this;
         }
 
         public Builder name(String value) {
-            genre.setName(value);
+            genre.name = value;
             return this;
         }
 

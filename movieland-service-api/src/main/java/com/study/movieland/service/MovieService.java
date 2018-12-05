@@ -3,13 +3,15 @@ package com.study.movieland.service;
 import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface MovieService {
 
-    List<Movie> getAll(RequestParams requestParams);
+    Movie get(int id, String currencyCode);
 
-    List<Movie> getRandom(int count);
+    Collection<Movie> getAll(RequestParams requestParams);
 
-    List<Movie> getByGenre(int genreId, RequestParams requestParams);
+    Collection<Movie> getRandom(int count);
+
+    Collection<Movie> getByGenre(int genreId, RequestParams requestParams);
 }

@@ -36,7 +36,6 @@ public class MovieRowMapperTest {
         assertEquals(100, actualMovie.getRating(), 0.0001);
         assertEquals(101, actualMovie.getPrice(), 0.0001);
         assertEquals("http://localhost/1.jpg", actualMovie.getPicturePath());
-        assertNull(actualMovie.getDescription());
     }
 }
 

@@ -1,7 +1,11 @@
 package com.study.movieland.web.controller;
 
 import com.study.movieland.data.RequestParams;
+import com.study.movieland.entity.Review;
+import com.study.movieland.entity.Country;
+import com.study.movieland.entity.Genre;
 import com.study.movieland.entity.Movie;
+import com.study.movieland.entity.User;
 import com.study.movieland.service.MovieService;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -47,14 +51,76 @@ public class MovieControllerTest {
     }
 
     @Test
+    public void testGet() throws Exception {
+        Movie movie = new Movie.Builder()
+                .id(1)
+                .nameNative("Movie")
+                .nameRussian("Фильм")
+                .yearOfRelease(2000)
+                .rating(100)
+                .price(101)
+                .picturePath("http://localhost/1.jpg")
+                .description("Some description")
+                .genres(Arrays.asList(
+                        new Genre.Builder().id(1).name("Genre 1").build(),
+                        new Genre.Builder().id(2).name("Genre 2").build()
+                ))
+                .countries(Arrays.asList(
+                        new Country.Builder().id(1).name("Country 1").build(),
+                        new Country.Builder().id(2).name("Country 2").build()
+                ))
+                .reviews(Arrays.asList(
+                        new Review.Builder()
+                                .id(1)
+                                .text("Some review text 1")
+                                .user(new User.Builder().id(1).nickName("Some User 1").build())
+                                .build(),
+                        new Review.Builder()
+                                .id(2)
+                                .text("Some review text 2")
+                                .user(new User.Builder().id(2).nickName("Some User 2").build())
+                                .build()))
+                .build();
+
+        when(movieService.get(1, "UAH")).thenReturn(movie);
+
+        mockMvc.perform(get("/movie/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("id", is(1)))
+                .andExpect(jsonPath("nameNative", is("Movie")))
+                .andExpect(jsonPath("nameRussian", is("Фильм")))
+                .andExpect(jsonPath("yearOfRelease", is(2000)))
+                .andExpect(jsonPath("rating", is(100d)))
+                .andExpect(jsonPath("price", is(101d)))
+                .andExpect(jsonPath("picturePath", is("http://localhost/1.jpg")))
+                .andExpect(jsonPath("description", is("Some description")))
+                .andExpect(jsonPath("genres[0].id", is(1)))
+                .andExpect(jsonPath("genres[0].name", is("Genre 1")))
+                .andExpect(jsonPath("genres[1].id", is(2)))
+                .andExpect(jsonPath("genres[1].name", is("Genre 2")))
+                .andExpect(jsonPath("countries[0].id", is(1)))
+                .andExpect(jsonPath("countries[0].name", is("Country 1")))
+                .andExpect(jsonPath("countries[1].id", is(2)))
+                .andExpect(jsonPath("countries[1].name", is("Country 2")))
+                .andExpect(jsonPath("reviews[0].id", is(1)))
+                .andExpect(jsonPath("reviews[0].text", is("Some review text 1")))
+                .andExpect(jsonPath("reviews[0].user.id", is(1)))
+                .andExpect(jsonPath("reviews[0].user.nickName", is("Some User 1")))
+                .andExpect(jsonPath("reviews[1].id", is(2)))
+                .andExpect(jsonPath("reviews[1].text", is("Some review text 2")))
+                .andExpect(jsonPath("reviews[1].user.id", is(2)))
+                .andExpect(jsonPath("reviews[1].user.nickName", is("Some User 2")));
+    }
+
+    @Test
     public void testGetAll() throws Exception {
-        List<Movie> movies = Arrays.asList(
+        Collection<Movie> movies = Arrays.asList(
                 new Movie.Builder()
                         .id(1)
                         .nameNative("Movie 1")
                         .nameRussian("Фильм 1")
                         .yearOfRelease(2000)
-                        .description("Description 1")
                         .rating(100)
                         .price(101)
                         .picturePath("http://localhost/1.jpg")
@@ -64,7 +130,6 @@ public class MovieControllerTest {
                         .nameNative("Movie 2")
                         .nameRussian("Фильм 2")
                         .yearOfRelease(2001)
-                        .description("Description 2")
                         .rating(200)
                         .price(201)
                         .picturePath("http://localhost/2.jpg")
@@ -98,13 +163,12 @@ public class MovieControllerTest {
 
     @Test
     public void testGetRandom() throws Exception {
-        List<Movie> movies = Arrays.asList(
+        Collection<Movie> movies = Arrays.asList(
                 new Movie.Builder()
                         .id(1)
                         .nameNative("Random movie 1")
                         .nameRussian("Фильм 1")
                         .yearOfRelease(2000)
-                        .description("Description 1")
                         .rating(100)
                         .price(101)
                         .picturePath("http://localhost/1.jpg")
@@ -114,7 +178,6 @@ public class MovieControllerTest {
                         .nameNative("Random movie 2")
                         .nameRussian("Фильм 2")
                         .yearOfRelease(2001)
-                        .description("Description 2")
                         .rating(200)
                         .price(201)
                         .picturePath("http://localhost/2.jpg")
@@ -146,13 +209,12 @@ public class MovieControllerTest {
 
     @Test
     public void testGetByGenre() throws Exception {
-        List<Movie> movies = Arrays.asList(
+        Collection<Movie> movies = Arrays.asList(
                 new Movie.Builder()
                         .id(1)
                         .nameNative("Movie 1")
                         .nameRussian("Фильм 1")
                         .yearOfRelease(2000)
-                        .description("Description 1")
                         .rating(100)
                         .price(101)
                         .picturePath("http://localhost/1.jpg")
@@ -162,7 +224,6 @@ public class MovieControllerTest {
                         .nameNative("Movie 2")
                         .nameRussian("Фильм 2")
                         .yearOfRelease(2001)
-                        .description("Description 2")
                         .rating(200)
                         .price(201)
                         .picturePath("http://localhost/2.jpg")
@@ -196,7 +257,7 @@ public class MovieControllerTest {
 
     @Test
     public void testGetByGenreNoFound() throws Exception {
-        List<Movie> movies = new ArrayList<>();
+        Collection<Movie> movies = new ArrayList<>();
         RequestParams requestParams = new RequestParams.Builder().build();
 
         when(movieService.getByGenre(2, requestParams)).thenReturn(movies);

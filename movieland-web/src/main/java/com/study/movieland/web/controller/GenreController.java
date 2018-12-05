@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path = "genre")
@@ -17,7 +17,7 @@ public class GenreController {
     private GenreService genreService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Genre> getAll() {
+    public Collection<Genre> getAll() {
         return genreService.getAll();
     }
 

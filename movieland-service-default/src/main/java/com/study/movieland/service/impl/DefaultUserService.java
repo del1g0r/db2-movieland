@@ -19,6 +19,11 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    public User checkUser(String login, String password) {
+        return userDao.checkPassword(login, password);
+    }
+
+    @Override
     public Collection<User> getAll() {
         return userDao.getAll();
     }

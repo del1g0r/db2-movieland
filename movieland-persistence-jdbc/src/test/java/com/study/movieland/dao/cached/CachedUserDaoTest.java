@@ -68,5 +68,10 @@ public class CachedUserDaoTest {
                             .nickName("User name 2")
                             .build());
         }
+
+        @Override
+        public User checkPassword(String name, String password) {
+            return null;
+        }
     }
 }

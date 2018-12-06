@@ -39,7 +39,7 @@ public class DefaultSecurityService implements SecurityService {
         return session;
     }
 
-    @Scheduled(fixedDelayString = "${scheduled.genreFixedDelay:600000}", initialDelayString = "${scheduled.genreFixedDelay:600000}")
+    @Scheduled(fixedDelayString = "${scheduled.securityFixedDelay:600000}", initialDelayString = "${scheduled.securityFixedDelay:600000}")
     public void killExpiredSessions() {
         sessions.values().removeIf((Session session) ->
                 session.getExpireTime().isBefore(LocalDateTime.now())

@@ -19,7 +19,7 @@ public class MovieDtoRowMapperTest {
     @Test
     public void testMapMovieDto() throws Exception {
 
-        MovieDtoRowMapper movieDtoRowMapper = new MovieDtoRowMapper();
+        MovieDetailedRowMapper movieDtoRowMapper = new MovieDetailedRowMapper();
 
         Array arrayOfGenrteIds = mock(Array.class);
         when(arrayOfGenrteIds.getArray()).thenReturn(new Integer[]{6, 7});

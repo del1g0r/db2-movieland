@@ -14,7 +14,7 @@ public class ReviewDtoRowMapperTest {
     @Test
     public void testMapReviewDto() throws Exception {
 
-        ReviewDtoRowMapper reviewDtoRowMapper = new ReviewDtoRowMapper();
+        ReviewRowMapper reviewDtoRowMapper = new ReviewRowMapper();
 
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt("id")).thenReturn(1);

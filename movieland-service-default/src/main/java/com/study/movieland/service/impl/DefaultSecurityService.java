@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,9 +25,8 @@ public class DefaultSecurityService implements SecurityService {
     private int sessionAge;
 
     private synchronized Session getOrCreateSession(User user) {
-        for (Map.Entry<String, Session> entry : sessions.entrySet()) {
-            Session session = entry.getValue();
-            if (user.getId() == session.getUser().getId()) {
+        for (Session session : sessions.values()) {
+             if (user.getId() == session.getUser().getId()) {
                 session.setExpireTime(LocalDateTime.now().plusSeconds(sessionAge));
                 return session;
             }

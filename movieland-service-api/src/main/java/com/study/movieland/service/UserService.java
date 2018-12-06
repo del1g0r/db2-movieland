@@ -8,6 +8,8 @@ public interface UserService {
 
     User get(int id);
 
+    User checkUser(String login, String password);
+
     Collection<User> getAll();
 
     default User enrich(User user) {

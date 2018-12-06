@@ -35,6 +35,11 @@ public class CachedUserDao implements UserDao {
         return new ArrayList<>(this.users.values());
     }
 
+    @Override
+    public User checkPassword(String name, String password) {
+        return userDao.checkPassword(name, password);
+    }
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;

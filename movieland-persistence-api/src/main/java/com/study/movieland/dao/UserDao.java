@@ -11,6 +11,8 @@ public interface UserDao {
 
     Collection<User> getAll();
 
+    User checkPassword(String name, String password);
+
     default User enrich(User user) {
         return get(user.getId());
     }

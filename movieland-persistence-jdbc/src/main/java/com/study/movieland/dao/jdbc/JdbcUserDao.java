@@ -18,9 +18,9 @@ public class JdbcUserDao implements UserDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String GET_SQL = "SELECT u.id, u.name, u.role_name FROM \"user\" u WHERE u.id = ?";
-    private static final String GET_ALL_SQL = "SELECT u.id, u.name, role_name FROM \"user\" u ORDER BY u.name";
-    private static final String CHECK_PWD_SQL = "SELECT pswhash = crypt(?, u.salt) is_checked, u.id, u.name, u.role_name FROM \"user\" u WHERE u.email = ?";
+    private static final String GET_SQL = "SELECT u.id, u.name, u.email, u.role_name FROM \"user\" u WHERE u.id = ?";
+    private static final String GET_ALL_SQL = "SELECT u.id, u.name, u.email, role_name FROM \"user\" u ORDER BY u.name";
+    private static final String CHECK_PWD_SQL = "SELECT pswhash = crypt(?, u.salt) is_checked, u.id, u.name, u.email, u.role_name FROM \"user\" u WHERE u.email = ?";
 
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
     private static final UserCheckedRowMapper USER_CHECKED_ROW_MAPPER = new UserCheckedRowMapper();

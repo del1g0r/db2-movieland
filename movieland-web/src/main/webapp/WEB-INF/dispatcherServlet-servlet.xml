@@ -13,8 +13,11 @@
     <context:component-scan base-package="com.study.movieland.web"/>
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
-            <bean class="com.study.movieland.web.argumentresolver.RequestParamsArgumentResolver" />
+            <bean class="com.study.movieland.web.argumentresolver.RequestParamsArgumentResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
+    <mvc:interceptors>
+        <bean class="com.study.movieland.web.interceptor.SecurityInterceptor"/>
+    </mvc:interceptors>
 
 </beans>

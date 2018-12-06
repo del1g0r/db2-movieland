@@ -1,6 +1,5 @@
 package com.study.movieland.service.impl;
 
-import com.study.movieland.entity.Genre;
 import com.study.movieland.entity.Session;
 import com.study.movieland.entity.User;
 import com.study.movieland.service.SecurityService;
@@ -11,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +24,7 @@ public class DefaultSecurityService implements SecurityService {
 
     private synchronized Session getOrCreateSession(User user) {
         for (Session session : sessions.values()) {
-             if (user.getId() == session.getUser().getId()) {
+            if (user.getId() == session.getUser().getId()) {
                 session.setExpireTime(LocalDateTime.now().plusSeconds(sessionAge));
                 return session;
             }
@@ -62,8 +60,8 @@ public class DefaultSecurityService implements SecurityService {
 
     @Override
     public Session getSession(String token) {
-        Session session = sessions.get(token);
-        if (session != null) {
+        Session session;
+        if (token != null && (session = sessions.get(token)) != null) {
             if (session.getExpireTime().isAfter(LocalDateTime.now())) {
                 return session;
             }

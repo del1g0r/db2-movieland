@@ -13,6 +13,7 @@ public class UserRowMapper implements RowMapper<User> {
         return new User.Builder()
                 .id(resultSet.getInt("id"))
                 .nickName(resultSet.getString("name"))
+                .eMail(resultSet.getString("email"))
                 .build();
     }
 }

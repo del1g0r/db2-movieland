@@ -23,6 +23,11 @@ public class DefaultReviewService implements ReviewService {
         return reviews;
     }
 
+    @Override
+    public void post(int movieId, int userId, String text) {
+        reviewDao.post(movieId, userId, text);
+    }
+
     @Autowired
     public void setReviewDao(ReviewDao reviewDao) {
         this.reviewDao = reviewDao;

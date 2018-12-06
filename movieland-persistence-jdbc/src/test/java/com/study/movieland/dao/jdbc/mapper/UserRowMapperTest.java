@@ -19,6 +19,8 @@ public class UserRowMapperTest {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt("id")).thenReturn(1);
         when(resultSet.getString("name")).thenReturn("Mick name 1");
+        when(resultSet.getString("email")).thenReturn("email@sample.com");
+        when(resultSet.getString("role_name")).thenReturn("USER");
 
         User actualUser = userRowMapper.mapRow(resultSet, 1);
 

@@ -12,8 +12,8 @@ import java.util.Collection;
 @Repository
 public class JdbRviewDao implements ReviewDao {
 
-    private static final String GET_SQL = "SELECT r.id, r.user_id, r.review_text FROM review r WHERE r.id = ?";
     private static final String GET_BY_USER_SQL = "SELECT r.id, r.user_id, r.review_text FROM review r WHERE r.movie_id = ?";
+    private static final String POST_SQL = "INSERT INTO review (movie_id, user_id, review_text) VALUES (?, ?, ?)";
     private static final ReviewRowMapper REVIEW_ROW_MAPPER = new ReviewRowMapper();
 
     private JdbcTemplate jdbcTemplate;
@@ -21,6 +21,11 @@ public class JdbRviewDao implements ReviewDao {
     @Override
     public Collection<Review> getByMovie(int movieId) {
         return jdbcTemplate.query(GET_BY_USER_SQL, REVIEW_ROW_MAPPER, movieId);
+    }
+
+    @Override
+    public void post(int movieId, int userId, String text) {
+        jdbcTemplate.update(POST_SQL, movieId, userId, text);
     }
 
     @Autowired

@@ -4,11 +4,11 @@ public enum SortDirection {
 
     ASC, DESC;
 
-    static SortDirection DEFAULT_DIRECTION = ASC;
+    static SortDirection DEFAULT = ASC;
 
-    public static SortDirection getByString(String value) {
+    public static SortDirection get(String value) {
         if (value == null || value.isEmpty()) {
-            return DEFAULT_DIRECTION;
+            return DEFAULT;
         }
         return SortDirection.valueOf(value.toUpperCase());
     }

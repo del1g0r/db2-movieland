@@ -28,6 +28,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         MDC.put("login", session == null ? "guest" : session.getUser().getEMail());
         MDC.put("requestId", UUID.randomUUID().toString());
 
+        request.setAttribute("session", session);
+
         return super.preHandle(request, response, handler);
     }
 

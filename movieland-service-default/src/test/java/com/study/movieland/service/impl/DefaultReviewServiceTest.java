@@ -55,6 +55,11 @@ public class DefaultReviewServiceTest {
                             .build()
             );
         }
+
+        @Override
+        public void post(int movieId, int userId, String text) {
+
+        }
     }
 
     class StubUserService implements UserService {

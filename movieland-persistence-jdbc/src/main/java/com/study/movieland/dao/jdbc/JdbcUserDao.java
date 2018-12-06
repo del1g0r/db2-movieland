@@ -4,6 +4,8 @@ import com.study.movieland.dao.UserDao;
 import com.study.movieland.dao.jdbc.mapper.UserCheckedRowMapper;
 import com.study.movieland.dao.jdbc.mapper.UserRowMapper;
 import com.study.movieland.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +15,8 @@ import java.util.Collection;
 
 @Repository
 public class JdbcUserDao implements UserDao {
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GET_SQL = "SELECT u.id, u.name, u.role_name FROM \"user\" u WHERE u.id = ?";
     private static final String GET_ALL_SQL = "SELECT u.id, u.name, role_name FROM \"user\" u ORDER BY u.name";
@@ -39,6 +43,7 @@ public class JdbcUserDao implements UserDao {
         try {
             return jdbcTemplate.queryForObject(CHECK_PWD_SQL, USER_CHECKED_ROW_MAPPER, password, name);
         } catch (EmptyResultDataAccessException e) {
+            log.warn("Unknown user is trying to connect: {}", name);
             return null;
         }
     }

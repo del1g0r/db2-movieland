@@ -6,6 +6,7 @@ import com.study.movieland.entity.Session;
 import com.study.movieland.service.ReviewService;
 import com.study.movieland.web.exception.NotAthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.EnumSet;
@@ -16,7 +17,7 @@ public class ReviewController {
 
     private ReviewService reviewService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void post(@RequestBody ReviewRequestDto reviewRequest, @RequestAttribute(required = false) Session session) {
         if (session == null || !EnumSet.of(Role.USER, Role.ADMIN).contains(session.getUser().getRole())) {
             throw new NotAthorizedException();

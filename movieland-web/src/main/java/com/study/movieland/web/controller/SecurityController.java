@@ -15,7 +15,7 @@ public class SecurityController {
 
     private SecurityService securityService;
 
-    @PostMapping(path = {"login"}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(path = {"login"}, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequest) {
         Session session = securityService.login(loginRequest.getEMail(), loginRequest.getPassword());
         if (session == null) {

@@ -1,5 +1,6 @@
 package com.study.movieland.service.impl;
 
+import com.study.movieland.entity.Role;
 import com.study.movieland.entity.Session;
 import com.study.movieland.entity.User;
 import com.study.movieland.service.SecurityService;
@@ -17,12 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class DefaultSecurityService implements SecurityService {
 
+    private final User GUEST_USER = new User.Builder().nickName("guest").eMail("guest").role(Role.GUEST).build();
     private Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     private UserService userService;
     private int sessionAge;
 
-    private synchronized Session getOrCreateSession(User user) {
+    private Session getOrCreateSession(User user) {
         for (Session session : sessions.values()) {
             if (user.getId() == session.getUser().getId()) {
                 session.setExpireTime(LocalDateTime.now().plusSeconds(sessionAge));
@@ -68,6 +70,11 @@ public class DefaultSecurityService implements SecurityService {
             sessions.remove(token);
         }
         return null;
+    }
+
+    @Override
+    public User getDefaultUser() {
+        return GUEST_USER;
     }
 
     @Override

@@ -24,8 +24,8 @@ public class DefaultReviewService implements ReviewService {
     }
 
     @Override
-    public void post(int movieId, int userId, String text) {
-        reviewDao.post(movieId, userId, text);
+    public void create(Review review) {
+        reviewDao.create(review);
     }
 
     @Autowired

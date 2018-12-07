@@ -8,5 +8,5 @@ public interface ReviewDao {
 
     Collection<Review> getByMovie(int movieId);
 
-    void post(int movieId, int userId, String text);
+    void create(Review review);
 }

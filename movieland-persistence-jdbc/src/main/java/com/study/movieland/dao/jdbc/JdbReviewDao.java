@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class JdbRviewDao implements ReviewDao {
+public class JdbReviewDao implements ReviewDao {
 
     private static final String GET_BY_USER_SQL = "SELECT r.id, r.user_id, r.review_text FROM review r WHERE r.movie_id = ?";
     private static final String POST_SQL = "INSERT INTO review (movie_id, user_id, review_text) VALUES (?, ?, ?)";
@@ -24,8 +24,8 @@ public class JdbRviewDao implements ReviewDao {
     }
 
     @Override
-    public void post(int movieId, int userId, String text) {
-        jdbcTemplate.update(POST_SQL, movieId, userId, text);
+    public void create(Review review) {
+        jdbcTemplate.update(POST_SQL, review.getMovie().getId(), review.getUser().getId(), review.getText());
     }
 
     @Autowired

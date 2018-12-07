@@ -27,7 +27,7 @@ public class SecurityController {
         return response;
     }
 
-    @DeleteMapping(path = {"logout"})
+    @DeleteMapping(path = {"logout"}, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void logout(@RequestHeader("uuid") String token) {
         securityService.logout(token);
     }

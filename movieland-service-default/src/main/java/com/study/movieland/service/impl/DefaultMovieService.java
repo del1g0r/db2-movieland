@@ -32,6 +32,16 @@ public class DefaultMovieService implements MovieService {
     }
 
     @Override
+    public void create(Movie movie) {
+        movieDao.create(movie);
+    }
+
+    @Override
+    public void update(Movie movie) {
+        movieDao.update(movie);
+    }
+
+    @Override
     public Collection<Movie> getAll(RequestParams requestParams) {
         if (requestParamValidator != null) {
             requestParamValidator.validate(requestParams);

@@ -23,6 +23,11 @@ public class DefaultReviewService implements ReviewService {
         return reviews;
     }
 
+    @Override
+    public void create(Review review) {
+        reviewDao.create(review);
+    }
+
     @Autowired
     public void setReviewDao(ReviewDao reviewDao) {
         this.reviewDao = reviewDao;

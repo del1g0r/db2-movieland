@@ -78,7 +78,7 @@ public class RequestParams {
         }
 
         public Builder sortDirection(String value) {
-            return sortDirection(SortDirection.getByString(value));
+            return sortDirection(SortDirection.get(value));
         }
 
         public Builder searchText(String value) {

@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface ReviewDao {
 
     Collection<Review> getByMovie(int movieId);
+
+    void create(Review review);
 }

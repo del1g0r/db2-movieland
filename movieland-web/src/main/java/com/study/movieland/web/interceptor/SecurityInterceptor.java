@@ -7,7 +7,7 @@ import com.study.movieland.service.SecurityService;
 import com.study.movieland.web.UserHolder;
 import com.study.movieland.web.annotation.ProtectedBy;
 import com.study.movieland.web.exception.ForbiddenException;
-import com.study.movieland.web.exception.NotAthorizedException;
+import com.study.movieland.web.exception.NotAuthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -36,10 +36,9 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             ProtectedBy protectedBy = method.getAnnotation(ProtectedBy.class);
             if (protectedBy != null
                     && Arrays.stream(protectedBy.role()).noneMatch(
-                    x -> x.equals(user.getRole())
-            )) {
+                    x -> x.equals(user.getRole()))) {
                 if (user.getRole().equals(Role.GUEST)) {
-                    throw new NotAthorizedException();
+                    throw new NotAuthorizedException();
                 }
                 throw new ForbiddenException(user.getEMail());
             }
@@ -49,13 +48,14 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
+        MDC.put("requestId", UUID.randomUUID().toString());
+
         String token = request.getHeader("uuid");
         Session session = securityService.getSession(token);
         User user = session == null ? securityService.getDefaultUser() : session.getUser();
         checkPermissions(handler, user);
 
         MDC.put("login", user.getEMail());
-        MDC.put("requestId", UUID.randomUUID().toString());
 
         UserHolder.setCurrentUser(user);
 

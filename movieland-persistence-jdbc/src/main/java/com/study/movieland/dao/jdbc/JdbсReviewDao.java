@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public class JdbReviewDao implements ReviewDao {
+public class JdbсReviewDao implements ReviewDao {
 
     private static final String GET_BY_USER_SQL = "SELECT r.id, r.user_id, r.review_text FROM review r WHERE r.movie_id = ?";
     private static final String POST_SQL = "INSERT INTO review (movie_id, user_id, review_text) VALUES (?, ?, ?)";

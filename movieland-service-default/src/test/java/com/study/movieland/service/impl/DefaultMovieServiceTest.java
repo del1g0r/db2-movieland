@@ -81,6 +81,7 @@ public class DefaultMovieServiceTest {
         movieService.setReviewService(reviewService);
         movieService.setCurrencyService(currencyService);
         movieService.setMovieDao(movieDao);
+        movieService.setEnrichTimeout(5000);
 
         Movie expectedMovie = new Movie.Builder()
                 .id(1)

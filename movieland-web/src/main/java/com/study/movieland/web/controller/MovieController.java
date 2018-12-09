@@ -36,7 +36,7 @@ public class MovieController {
         return movieService.get(movieId, currencyCode);
     }
 
-    @ProtectedBy(role = {Role.ADMIN})
+    @ProtectedBy(role = Role.ADMIN)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void create(@RequestBody MovieRequestDto movieRequest) {
         movieService.create(new Movie.Builder()
@@ -51,7 +51,7 @@ public class MovieController {
                 .build());
     }
     
-    @ProtectedBy(role = {Role.ADMIN})
+    @ProtectedBy(role = Role.ADMIN)
     @PutMapping(path = {"/{movieId}"}, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public void update(@RequestBody MovieRequestDto movieRequest, @PathVariable int movieId) {
         movieService.update(new Movie.Builder()

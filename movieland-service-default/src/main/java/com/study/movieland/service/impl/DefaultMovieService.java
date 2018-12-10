@@ -21,6 +21,7 @@ import java.util.concurrent.*;
 public class DefaultMovieService implements MovieService {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultMovieService.class);
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     private MovieDao movieDao;
     private GenreService genreService;
@@ -36,8 +37,7 @@ public class DefaultMovieService implements MovieService {
 
         try {
             Map<String, String> contextMap = MDC.getCopyOfContextMap();
-            if (Executors
-                    .newCachedThreadPool()
+            if (executorService
                     .invokeAll(Arrays.asList(
                             () -> {
                                 MDC.setContextMap(contextMap);

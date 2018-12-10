@@ -6,7 +6,6 @@ public class Review {
 
     private int id;
     private User user;
-    private Movie movie;
     private String text;
 
     public int getId() {
@@ -19,10 +18,6 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Movie getMovie() {
-        return movie;
     }
 
     public String getText() {
@@ -69,11 +64,6 @@ public class Review {
 
         public Builder user(User value) {
             review.user = value;
-            return this;
-        }
-
-        public Builder movie(Movie value) {
-            review.movie = value;
             return this;
         }
 

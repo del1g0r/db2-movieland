@@ -18,11 +18,11 @@ public class ReviewController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ProtectedBy(role = {Role.USER, Role.ADMIN})
     public void post(@RequestBody ReviewRequestDto reviewRequest, @RequestAttribute(required = false) Session session) {
-        reviewService.create(new Review.Builder()
-                .movie(new Movie.Builder().id(reviewRequest.getMovieId()).build())
-                .user(UserHolder.getCurrentUser())
-                .text(reviewRequest.getText())
-                .build()
+        reviewService.create(reviewRequest.getMovieId(),
+                new Review.Builder()
+                        .user(UserHolder.getCurrentUser())
+                        .text(reviewRequest.getText())
+                        .build()
         );
     }
 

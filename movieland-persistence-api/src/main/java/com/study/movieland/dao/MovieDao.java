@@ -9,6 +9,10 @@ public interface MovieDao {
 
     Movie get(int id);
 
+    void create(Movie movie);
+
+    void update(Movie movie);
+
     Collection<Movie> getAll(RequestParams requestParams);
 
     Collection<Movie> getRandom(int count);

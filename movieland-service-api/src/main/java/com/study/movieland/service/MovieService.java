@@ -9,6 +9,10 @@ public interface MovieService {
 
     Movie get(int id, String currencyCode);
 
+    void create(Movie movie);
+
+    void update(Movie movie);
+
     Collection<Movie> getAll(RequestParams requestParams);
 
     Collection<Movie> getRandom(int count);

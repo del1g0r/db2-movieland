@@ -72,10 +72,10 @@ public class ParallelEnrichmentService implements EnrichmentService {
                     if (future.isCancelled()) {
                         log.warn("The movie {} has not been enriched fully because of timeout", movie.getId());
                     } else {
-                        Function<Movie, Movie> function = future.get(0, TimeUnit.MILLISECONDS);
+                        Function<Movie, Movie> function = future.get();
                         movie = function.apply(movie);
                     }
-                } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     log.error("Step of movie {} enrichment was skipped", movie.getId(), e);
                 }
             }

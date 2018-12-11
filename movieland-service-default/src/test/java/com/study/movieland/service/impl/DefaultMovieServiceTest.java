@@ -75,11 +75,14 @@ public class DefaultMovieServiceTest {
                         .build()
         );
 
+        ParallelEnrichmentService enrichmentService = new ParallelEnrichmentService();
         DefaultMovieService movieService = new DefaultMovieService();
-        movieService.setGenreService(genreService);
-        movieService.setCountryService(countryService);
-        movieService.setReviewService(reviewService);
-        movieService.setCurrencyService(currencyService);
+        enrichmentService.setGenreService(genreService);
+        enrichmentService.setCountryService(countryService);
+        enrichmentService.setReviewService(reviewService);
+        enrichmentService.setCurrencyService(currencyService);
+        enrichmentService.setEnrichTimeout(5000);
+        movieService.setEnrichmentService(enrichmentService);
         movieService.setMovieDao(movieDao);
 
         Movie expectedMovie = new Movie.Builder()

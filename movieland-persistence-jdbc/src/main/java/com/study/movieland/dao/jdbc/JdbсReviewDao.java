@@ -24,8 +24,8 @@ public class JdbсReviewDao implements ReviewDao {
     }
 
     @Override
-    public void create(Review review) {
-        jdbcTemplate.update(POST_SQL, review.getMovie().getId(), review.getUser().getId(), review.getText());
+    public void create(int movieId, Review review) {
+        jdbcTemplate.update(POST_SQL, movieId, review.getUser().getId(), review.getText());
     }
 
     @Autowired

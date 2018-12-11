@@ -9,5 +9,5 @@ public interface ReviewService {
 
     Collection<Review> getByMovie(int movieId);
 
-    void create(Review review);
+    void create(int movieId, Review review);
 }

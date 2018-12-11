@@ -14,21 +14,13 @@ import java.util.Collection;
 public class DefaultMovieService implements MovieService {
 
     private MovieDao movieDao;
-    private GenreService genreService;
-    private CountryService countryService;
-    private ReviewService reviewService;
-    private CurrencyService currencyService;
+    private EnrichmentService enrichmentService;
+
     private MovieRequestParamsValidator requestParamValidator;
 
     @Override
     public Movie get(int id, String currencyCode) {
-        Movie movie = movieDao.get(id);
-        return new Movie.Builder(movie)
-                .genres(genreService.enrich(movie.getGenres()))
-                .countries(countryService.enrich(movie.getCountries()))
-                .reviews(reviewService.getByMovie(id))
-                .price(currencyService.exchange(movie.getPrice(), currencyCode))
-                .build();
+        return enrichmentService.enrichMovie(movieDao.get(id), currencyCode);
     }
 
     @Override
@@ -68,27 +60,12 @@ public class DefaultMovieService implements MovieService {
     }
 
     @Autowired
-    public void setGenreService(GenreService genreService) {
-        this.genreService = genreService;
-    }
-
-    @Autowired
-    public void setCountryService(CountryService countryService) {
-        this.countryService = countryService;
-    }
-
-    @Autowired
-    public void setReviewService(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
-
-    @Autowired
-    public void setCurrencyService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
-    }
-
-    @Autowired
     public void setRequestParamValidator(MovieRequestParamsValidator requestParamValidator) {
         this.requestParamValidator = requestParamValidator;
+    }
+
+    @Autowired
+    public void setEnrichmentService(EnrichmentService enrichmentService) {
+        this.enrichmentService = enrichmentService;
     }
 }

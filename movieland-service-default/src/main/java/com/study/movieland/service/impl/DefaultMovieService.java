@@ -15,12 +15,21 @@ public class DefaultMovieService implements MovieService {
 
     private MovieDao movieDao;
     private EnrichmentService enrichmentService;
+    private CurrencyService currencyService;
 
     private MovieRequestParamsValidator requestParamValidator;
 
     @Override
+    public Movie get(int id) {
+        return enrichmentService.enrichMovie(movieDao.get(id));
+    }
+
+    @Override
     public Movie get(int id, String currencyCode) {
-        return enrichmentService.enrichMovie(movieDao.get(id), currencyCode);
+        Movie movie = get(id);
+        return new Movie.Builder(movie)
+                .price(currencyService.exchange(movie.getPrice(), currencyCode))
+                .build();
     }
 
     @Override
@@ -67,5 +76,10 @@ public class DefaultMovieService implements MovieService {
     @Autowired
     public void setEnrichmentService(EnrichmentService enrichmentService) {
         this.enrichmentService = enrichmentService;
+    }
+
+    @Autowired
+    public void setCurrencyService(CurrencyService currencyService) {
+        this.currencyService = currencyService;
     }
 }

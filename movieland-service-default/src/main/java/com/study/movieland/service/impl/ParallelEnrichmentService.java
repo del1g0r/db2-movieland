@@ -27,11 +27,10 @@ public class ParallelEnrichmentService implements EnrichmentService {
     private GenreService genreService;
     private CountryService countryService;
     private ReviewService reviewService;
-    private CurrencyService currencyService;
     private int enrichTimeout;
 
     @Override
-    public Movie enrichMovie(Movie movie, String currencyCode) {
+    public Movie enrichMovie(Movie movie) {
         Map<String, String> contextMap = MDC.getCopyOfContextMap();
         Movie finalMovie = movie;
         try {
@@ -82,9 +81,7 @@ public class ParallelEnrichmentService implements EnrichmentService {
         } catch (InterruptedException e) {
             log.error("Enrichment of movie {} was interrupted", movie.getId(), e);
         }
-        return new Movie.Builder(movie)
-                .price(currencyService.exchange(movie.getPrice(), currencyCode))
-                .build();
+        return movie;
     }
 
     @Autowired
@@ -100,11 +97,6 @@ public class ParallelEnrichmentService implements EnrichmentService {
     @Autowired
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
-    }
-
-    @Autowired
-    public void setCurrencyService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
     }
 
     @Value("${web.movie.enrichTimeoutMS:5000}")

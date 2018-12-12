@@ -4,5 +4,5 @@ import com.study.movieland.entity.Movie;
 
 public interface EnrichmentService {
 
-    Movie enrichMovie(Movie movie, String currencyCode);
+    Movie enrichMovie(Movie movie);
 }

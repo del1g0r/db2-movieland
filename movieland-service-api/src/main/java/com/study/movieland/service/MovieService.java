@@ -7,6 +7,8 @@ import java.util.Collection;
 
 public interface MovieService {
 
+    Movie get(int id);
+
     Movie get(int id, String currencyCode);
 
     void create(Movie movie);

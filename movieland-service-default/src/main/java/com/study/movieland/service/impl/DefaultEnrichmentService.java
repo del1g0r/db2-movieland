@@ -11,15 +11,13 @@ public class DefaultEnrichmentService implements EnrichmentService {
     private GenreService genreService;
     private CountryService countryService;
     private ReviewService reviewService;
-    private CurrencyService currencyService;
 
     @Override
-    public Movie enrichMovie(Movie movie, String currencyCode) {
+    public Movie enrichMovie(Movie movie) {
         return new Movie.Builder(movie)
                 .genres(genreService.enrich(movie.getGenres()))
                 .countries(countryService.enrich(movie.getCountries()))
                 .reviews(reviewService.getByMovie(movie.getId()))
-                .price(currencyService.exchange(movie.getPrice(), currencyCode))
                 .build();
     }
 
@@ -36,10 +34,5 @@ public class DefaultEnrichmentService implements EnrichmentService {
     @Autowired
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
-    }
-
-    @Autowired
-    public void setCurrencyService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
     }
 }

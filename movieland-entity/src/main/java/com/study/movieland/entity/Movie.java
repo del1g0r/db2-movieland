@@ -111,28 +111,12 @@ public class Movie {
                 '}';
     }
 
-    public void setCountries(Collection<Country> countries) {
-        this.countries = countries;
-    }
-
-    public void setGenres(Collection<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public void setReviews(Collection<Review> reviews) {
-        this.reviews = reviews;
-    }
-
     public static class Builder {
 
         private Movie movie;
 
         public Builder() {
             movie = new Movie();
-        }
-
-        public Builder(Movie movie) {
-            this.movie = movie;
         }
 
         public Builder id(int value) {

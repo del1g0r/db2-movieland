@@ -1,13 +1,18 @@
 package com.study.movieland.service.impl;
 
 import com.study.movieland.dao.MovieDao;
+import com.study.movieland.data.MovieEnricherType;
 import com.study.movieland.data.RequestParams;
+import com.study.movieland.entity.Country;
+import com.study.movieland.entity.Genre;
 import com.study.movieland.entity.Movie;
+import com.study.movieland.entity.Review;
 import com.study.movieland.service.*;
 import com.study.movieland.service.validator.MovieRequestParamsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -27,19 +32,29 @@ public class DefaultMovieService implements MovieService {
     @Override
     public Movie get(int id, String currencyCode) {
         Movie movie = get(id);
-        return new Movie.Builder(movie)
+        return new Movie.Builder()
+                .id(movie.getId())
+                .nameRussian(movie.getNameRussian())
+                .nameNative(movie.getNameNative())
+                .yearOfRelease(movie.getYearOfRelease())
+                .description(movie.getDescription())
+                .rating(movie.getRating())
                 .price(currencyService.exchange(movie.getPrice(), currencyCode))
+                .picturePath(movie.getPicturePath())
+                .countries(new ArrayList<>(movie.getCountries()))
+                .genres(new ArrayList<>(movie.getGenres()))
+                .reviews(new ArrayList<>(movie.getReviews()))
                 .build();
     }
 
     @Override
-    public void create(Movie movie) {
-        movieDao.create(movie);
+    public Movie create(Movie movie) {
+        return movieDao.create(movie);
     }
 
     @Override
-    public void update(Movie movie) {
-        movieDao.update(movie);
+    public Movie update(Movie movie) {
+        return movieDao.update(movie);
     }
 
     @Override

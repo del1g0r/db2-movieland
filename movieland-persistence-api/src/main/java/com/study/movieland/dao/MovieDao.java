@@ -9,9 +9,9 @@ public interface MovieDao {
 
     Movie get(int id);
 
-    void create(Movie movie);
+    Movie create(Movie movie);
 
-    void update(Movie movie);
+    Movie update(Movie movie);
 
     Collection<Movie> getAll(RequestParams requestParams);
 

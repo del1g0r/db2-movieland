@@ -1,5 +1,6 @@
 package com.study.movieland.service.impl.cached;
 
+import com.study.movieland.data.MovieEnricherType;
 import com.study.movieland.data.RequestParams;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.CurrencyService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,54 +27,58 @@ public class CachedMovieService implements MovieService {
     private EnrichmentService enrichmentService;
     private CurrencyService currencyService;
 
-    private Movie getFromCache(int id) {
-        SoftReference<Movie> ref = MOVIES.get(id);
-        return ref != null ? ref.get() : null;
-    }
-
-    private void putToCache(Movie movie) {
-        MOVIES.put(movie.getId(), new SoftReference<>(movie));
-    }
-
     @Override
     public Movie get(int id) {
-        Movie movie = getFromCache(id);
-        if (movie != null) {
-            return movie;
-        }
-        movie = movieService.get(id);
-        putToCache(movie);
-        return movie;
+        return MOVIES.computeIfAbsent(id, (newMovie) -> {
+            return new SoftReference<>(movieService.get(id));
+        }).get();
     }
 
     @Override
     public Movie get(int id, String currencyCode) {
         Movie movie = get(id);
-        return new Movie.Builder(movie)
+        return new Movie.Builder()
+                .id(movie.getId())
+                .nameRussian(movie.getNameRussian())
+                .nameNative(movie.getNameNative())
+                .yearOfRelease(movie.getYearOfRelease())
+                .description(movie.getDescription())
+                .rating(movie.getRating())
                 .price(currencyService.exchange(movie.getPrice(), currencyCode))
+                .picturePath(movie.getPicturePath())
+                .countries(new ArrayList<>(movie.getCountries()))
+                .genres(new ArrayList<>(movie.getGenres()))
+                .reviews(new ArrayList<>(movie.getReviews()))
                 .build();
     }
 
     @Override
-    public void create(Movie movie) {
-        movieService.create(movie);
+    public Movie create(Movie movie) {
+        return movieService.create(movie);
     }
 
     @Override
-    public void update(Movie movie) {
-        movieService.update(movie);
-        Movie cachedMovie = getFromCache(movie.getId());
-        if (cachedMovie != null) {
-            movie = enrichmentService.enrichMovie(movie);
-            cachedMovie = new Movie.Builder(cachedMovie)
-                    .nameNative(movie.getNameNative())
-                    .nameRussian(movie.getNameRussian())
-                    .picturePath(movie.getPicturePath())
-                    .genres(new ArrayList<>(movie.getGenres()))
-                    .countries(new ArrayList<>(movie.getCountries()))
-                    .build();
-            putToCache(cachedMovie);
-        }
+    public Movie update(Movie movie) {
+        return MOVIES.merge(movie.getId(), new SoftReference<>(movieService.update(movie)),
+                (oldRef, newRef) -> {
+                    Movie oldMovie = oldRef.get();
+                    Movie newMovie = enrichmentService.enrichMovie(newRef.get(), EnumSet.of(MovieEnricherType.COUNTRY, MovieEnricherType.GENRES));
+                    return new SoftReference<>(
+                            new Movie.Builder()
+                                    .id(oldMovie.getId())
+                                    .nameRussian(newMovie.getNameRussian())
+                                    .nameNative(newMovie.getNameNative())
+                                    .yearOfRelease(oldMovie.getYearOfRelease())
+                                    .description(oldMovie.getDescription())
+                                    .rating(oldMovie.getRating())
+                                    .price(oldMovie.getPrice())
+                                    .picturePath(newMovie.getPicturePath())
+                                    .countries(new ArrayList<>(newMovie.getCountries()))
+                                    .genres(new ArrayList<>(newMovie.getGenres()))
+                                    .reviews(new ArrayList<>(oldMovie.getReviews()))
+                                    .build());
+                }
+        ).get();
     }
 
     @Override

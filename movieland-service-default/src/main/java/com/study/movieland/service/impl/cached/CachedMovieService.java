@@ -29,9 +29,8 @@ public class CachedMovieService implements MovieService {
 
     @Override
     public Movie get(int id) {
-        return MOVIES.computeIfAbsent(id, (newMovie) -> {
-            return new SoftReference<>(movieService.get(id));
-        }).get();
+        return MOVIES.computeIfAbsent(id, (oldId) -> new SoftReference<>(movieService.get(oldId))
+        ).get();
     }
 
     @Override
@@ -59,10 +58,10 @@ public class CachedMovieService implements MovieService {
 
     @Override
     public Movie update(Movie movie) {
-        return MOVIES.merge(movie.getId(), new SoftReference<>(movieService.update(movie)),
-                (oldRef, newRef) -> {
-                    Movie oldMovie = oldRef.get();
-                    Movie newMovie = enrichmentService.enrichMovie(newRef.get(), EnumSet.of(MovieEnricherType.COUNTRY, MovieEnricherType.GENRES));
+        return MOVIES.computeIfPresent(movie.getId(),
+                (id, ref) -> {
+                    Movie oldMovie = ref.get();
+                    Movie newMovie = enrichmentService.enrichMovie(movie, EnumSet.of(MovieEnricherType.COUNTRY, MovieEnricherType.GENRES));
                     return new SoftReference<>(
                             new Movie.Builder()
                                     .id(oldMovie.getId())

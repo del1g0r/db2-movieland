@@ -80,8 +80,8 @@ public class DefaultMovieServiceTest {
         enrichmentService.setGenreService(genreService);
         enrichmentService.setCountryService(countryService);
         enrichmentService.setReviewService(reviewService);
-        enrichmentService.setCurrencyService(currencyService);
         enrichmentService.setEnrichTimeout(5000);
+        movieService.setCurrencyService(currencyService);
         movieService.setEnrichmentService(enrichmentService);
         movieService.setMovieDao(movieDao);
 

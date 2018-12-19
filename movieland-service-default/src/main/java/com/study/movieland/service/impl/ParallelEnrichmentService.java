@@ -1,5 +1,6 @@
 package com.study.movieland.service.impl;
 
+import com.study.movieland.data.MovieEnricherType;
 import com.study.movieland.entity.Country;
 import com.study.movieland.entity.Genre;
 import com.study.movieland.entity.Movie;
@@ -27,64 +28,85 @@ public class ParallelEnrichmentService implements EnrichmentService {
     private GenreService genreService;
     private CountryService countryService;
     private ReviewService reviewService;
-    private CurrencyService currencyService;
     private int enrichTimeout;
 
-    @Override
-    public Movie enrichMovie(Movie movie, String currencyCode) {
+    public Movie enrichMovie(Movie movie, Set<MovieEnricherType> enricherTypes) {
         Map<String, String> contextMap = MDC.getCopyOfContextMap();
         Movie finalMovie = movie;
+        Collection<Callable<Function<Movie.Builder, Movie.Builder>>> tasks = new ArrayList<>();
+
+        if (enricherTypes.contains(MovieEnricherType.GENRES)) {
+            tasks.add(() -> {
+                MDC.setContextMap(contextMap);
+                Collection<Genre> genres = genreService.enrich(finalMovie.getGenres());
+                MDC.clear();
+                return (r) -> {
+                    r.genres(genres);
+                    return r;
+                };
+            });
+        }
+
+        if (enricherTypes.contains(MovieEnricherType.COUNTRY)) {
+            tasks.add(() -> {
+                MDC.setContextMap(contextMap);
+                Collection<Country> countries = countryService.enrich(finalMovie.getCountries());
+                MDC.clear();
+                return (r) -> {
+                    r.countries(countries);
+                    return r;
+                };
+            });
+        }
+
+        if (enricherTypes.contains(MovieEnricherType.REVIEWS)) {
+            tasks.add(() -> {
+                MDC.setContextMap(contextMap);
+                Collection<Review> reviews = reviewService.getByMovie(finalMovie.getId());
+                MDC.clear();
+                return (r) -> {
+                    r.reviews(reviews);
+                    return r;
+                };
+            });
+        }
+
         try {
-            List<Future<Function<Movie, Movie>>> futures = executorService.invokeAll(Arrays.asList(
-                    () -> {
-                        MDC.setContextMap(contextMap);
-                        Collection<Genre> genres = genreService.enrich(finalMovie.getGenres());
-                        MDC.clear();
-                        return (r) -> {
-                            r.setGenres(genres);
-                            return r;
-                        };
-                    },
-                    () -> {
-                        MDC.setContextMap(contextMap);
-                        Collection<Country> countries = countryService.enrich(finalMovie.getCountries());
-                        MDC.clear();
-                        return (r) -> {
-                            r.setCountries(countries);
-                            return r;
-                        };
-                    },
-                    () -> {
-                        MDC.setContextMap(contextMap);
-                        Collection<Review> reviews = reviewService.getByMovie(finalMovie.getId());
-                        MDC.clear();
-                        return (r) -> {
-                            r.setReviews(reviews);
-                            return r;
-                        };
-                    }
-                    ),
+            List<Future<Function<Movie.Builder, Movie.Builder>>> futures = executorService.invokeAll(
+                    tasks,
                     enrichTimeout,
                     TimeUnit.MILLISECONDS);
 
-            for (Future<Function<Movie, Movie>> future : futures) {
+            Movie.Builder builder = new Movie.Builder()
+                    .id(movie.getId())
+                    .nameRussian(movie.getNameRussian())
+                    .nameNative(movie.getNameNative())
+                    .yearOfRelease(movie.getYearOfRelease())
+                    .description(movie.getDescription())
+                    .rating(movie.getRating())
+                    .price(movie.getPrice())
+                    .picturePath(movie.getPicturePath())
+                    .countries(new ArrayList<>())
+                    .genres(new ArrayList<>())
+                    .reviews(new ArrayList<>());
+
+            for (Future<Function<Movie.Builder, Movie.Builder>> future : futures) {
                 try {
                     if (future.isCancelled()) {
                         log.warn("The movie {} has not been enriched fully because of timeout", movie.getId());
                     } else {
-                        Function<Movie, Movie> function = future.get();
-                        movie = function.apply(movie);
+                        Function<Movie.Builder, Movie.Builder> function = future.get();
+                        builder = function.apply(builder);
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("Step of movie {} enrichment was skipped", movie.getId(), e);
                 }
             }
+            return builder.build();
         } catch (InterruptedException e) {
             log.error("Enrichment of movie {} was interrupted", movie.getId(), e);
+            return null;
         }
-        return new Movie.Builder(movie)
-                .price(currencyService.exchange(movie.getPrice(), currencyCode))
-                .build();
     }
 
     @Autowired
@@ -100,11 +122,6 @@ public class ParallelEnrichmentService implements EnrichmentService {
     @Autowired
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
-    }
-
-    @Autowired
-    public void setCurrencyService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
     }
 
     @Value("${web.movie.enrichTimeoutMS:5000}")

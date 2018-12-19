@@ -46,7 +46,7 @@ public class JdbcMovieDao implements MovieDao {
 
     @Override
     @Transactional
-    public void create(Movie movie) {
+    public Movie create(Movie movie) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(CREATE_SQL,
@@ -67,10 +67,11 @@ public class JdbcMovieDao implements MovieDao {
                 .addValue("movieId", keyHolder.getKey())
                 .addValue("posterUrl", movie.getPicturePath())
         );
+        return movie;
     }
 
     @Override
-    public void update(Movie movie) {
+    public Movie update(Movie movie) {
         jdbcTemplate.update(UPDATE_SQL, new MapSqlParameterSource()
                 .addValue("movieId", movie.getId())
                 .addValue("nameRussian", movie.getNameRussian())
@@ -79,6 +80,7 @@ public class JdbcMovieDao implements MovieDao {
                 .addValue("genreIds", getGenreIds(movie.getGenres()))
                 .addValue("countryIds", getCountryIds(movie.getCountries()))
         );
+        return movie;
     }
 
     @Override

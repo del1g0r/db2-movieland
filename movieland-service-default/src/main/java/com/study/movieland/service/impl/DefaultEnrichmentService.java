@@ -1,9 +1,13 @@
 package com.study.movieland.service.impl;
 
+import com.study.movieland.data.MovieEnricherType;
 import com.study.movieland.entity.Movie;
 import com.study.movieland.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 @Service
 public class DefaultEnrichmentService implements EnrichmentService {
@@ -11,15 +15,31 @@ public class DefaultEnrichmentService implements EnrichmentService {
     private GenreService genreService;
     private CountryService countryService;
     private ReviewService reviewService;
-    private CurrencyService currencyService;
 
     @Override
-    public Movie enrichMovie(Movie movie, String currencyCode) {
-        return new Movie.Builder(movie)
-                .genres(genreService.enrich(movie.getGenres()))
-                .countries(countryService.enrich(movie.getCountries()))
-                .reviews(reviewService.getByMovie(movie.getId()))
-                .price(currencyService.exchange(movie.getPrice(), currencyCode))
+    public Movie enrichMovie(Movie movie, Set<MovieEnricherType> enricherTypes) {
+        return new Movie.Builder()
+                .id(movie.getId())
+                .nameRussian(movie.getNameRussian())
+                .nameNative(movie.getNameNative())
+                .yearOfRelease(movie.getYearOfRelease())
+                .description(movie.getDescription())
+                .rating(movie.getRating())
+                .price(movie.getPrice())
+                .picturePath(movie.getPicturePath())
+                .countries(
+                        enricherTypes.contains(MovieEnricherType.COUNTRY) ?
+                                countryService.enrich(movie.getCountries()) :
+                                new ArrayList<>(movie.getCountries()))
+                .genres(
+                        enricherTypes.contains(MovieEnricherType.GENRES) ?
+                                genreService.enrich(movie.getGenres()) :
+                                new ArrayList<>(movie.getGenres()))
+                .reviews(
+                        enricherTypes.contains(MovieEnricherType.REVIEWS) ?
+                                reviewService.getByMovie(movie.getId()) :
+                                new ArrayList<>(movie.getReviews())
+                )
                 .build();
     }
 
@@ -36,10 +56,5 @@ public class DefaultEnrichmentService implements EnrichmentService {
     @Autowired
     public void setReviewService(ReviewService reviewService) {
         this.reviewService = reviewService;
-    }
-
-    @Autowired
-    public void setCurrencyService(CurrencyService currencyService) {
-        this.currencyService = currencyService;
     }
 }
